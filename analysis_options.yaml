@@ -22,7 +22,31 @@ linter:
   # producing the lint.
   rules:
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    always_declare_return_types: true # Declare method return types.
+    always_specify_types: true  # Specify type annotations.
+    avoid_escaping_inner_quotes: true # Avoid escaping inner quotes by converting surrounding quotes.
+    eol_at_end_of_file: true  # Put a single newline at end of file.]
+    lines_longer_than_80_chars: true  # Avoid lines longer than 80 characters.
+    parameter_assignments: true # Don't reassign references to parameters of functions or methods.
+    prefer_foreach: true  # Use forEach to only apply a function to all the elements.
+    prefer_int_literals: true # Prefer int literals over double literals.
+    require_trailing_commas: true # Use trailing commas for all parameter lists and argument lists.
+    sized_box_shrink_expand: true # Use SizedBox shrink and expand named constructors.
+    unnecessary_await_in_return: true # Unnecessary await keyword in return.
+    unnecessary_breaks: true  # Don't use explicit breaks when a break is implied.
+    unnecessary_lambdas: true # Don't create a lambda when a tear-off will do.
+    unnecessary_parenthesis: true # Unnecessary parentheses can be removed.
+    unnecessary_raw_strings: true # Unnecessary raw string.
+    use_colored_box: true # Use ColoredBox.
+    use_decorated_box: true # Use DecoratedBox.
+    use_enums: true # Use enums rather than classes that behave like enums.
+    use_named_constants: true # Use predefined named constants.
+    use_raw_strings: true # Use raw string to avoid escapes.
+    use_string_buffers: true  # Use string buffers to compose strings.
+    use_test_throws_matchers: true  # Use throwsA matcher instead of fail().
+    use_to_and_as_if_applicable: true # Start the name of the method with to/_to or as/_as if applicable.
+    sort_pub_dependencies: true # Sort pub dependencies alphabetically.
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
