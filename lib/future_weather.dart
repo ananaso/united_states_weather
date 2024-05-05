@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:united_states_weather/fetch_weather.dart';
+import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
 class FutureWeather extends StatefulWidget {
   const FutureWeather({super.key, required this.client});
