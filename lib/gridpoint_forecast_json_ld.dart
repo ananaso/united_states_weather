@@ -223,26 +223,25 @@ class GridpointForecastPeriod {
 
     final temperatureTrend = json['temperatureTrend'] as String?;
 
-    final probabilityOfPrecipitation = json['probabilityOfPrecipitation'];
-    if (probabilityOfPrecipitation is! QuantitativeValue) {
-      throw FormatException(
-        'Invalid JSON: required "probabilityOfPrecipitation" field of type QuantitativeValue in $json',
-      );
-    }
+    final probabilityOfPrecipitationRaw = json['probabilityOfPrecipitation'];
+    final probabilityOfPrecipitation = probabilityOfPrecipitationRaw != null
+        ? QuantitativeValue.fromJson(
+            probabilityOfPrecipitationRaw as Map<String, dynamic>)
+        : throw FormatException(
+            'Invalid JSON: required "probabilityOfPrecipitation" field of type QuantitativeValue in $json');
 
-    final dewpoint = json['dewpoint'];
-    if (dewpoint is! QuantitativeValue) {
-      throw FormatException(
-        'Invalid JSON: required "dewpoint" field of type QuantitativeValue in $json',
-      );
-    }
+    final dewpointRaw = json['dewpoint'];
+    final dewpoint = dewpointRaw != null
+        ? QuantitativeValue.fromJson(dewpointRaw as Map<String, dynamic>)
+        : throw FormatException(
+            'Invalid JSON: required "dewpoint" field of type QuantitativeValue in $json');
 
-    final relativeHumidity = json['relativeHumidity'];
-    if (relativeHumidity is! QuantitativeValue) {
-      throw FormatException(
-        'Invalid JSON: required "relativeHumidity" field of type QuantitativeValue in $json',
-      );
-    }
+    final relativeHumidityRaw = json['relativeHumidity'];
+    final relativeHumidity = relativeHumidityRaw != null
+        ? QuantitativeValue.fromJson(
+            relativeHumidityRaw as Map<String, dynamic>)
+        : throw FormatException(
+            'Invalid JSON: required "relativeHumidity" field of type QuantitativeValue in $json');
 
     final windSpeed = json['windSpeed'];
     if (windSpeed is! String) {

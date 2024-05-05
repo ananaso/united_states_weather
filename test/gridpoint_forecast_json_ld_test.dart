@@ -63,6 +63,63 @@ void main() {
     });
   });
 
+  group('GridpointForecastPeriod', () {
+    test('deserializes JSON to all fields', () {
+      const actualGFP = {
+        'number': 1,
+        'name': 'Tonight',
+        'startTime': '2024-05-04T20:00:00-07:00',
+        'endTime': '2024-05-05T06:00:00-07:00',
+        'isDaytime': false,
+        'temperature': 55,
+        'temperatureUnit': 'F',
+        'temperatureTrend': null,
+        'probabilityOfPrecipitation': {
+          'unitCode': 'wmoUnit:percent',
+          'value': 40,
+        },
+        'dewpoint': {'unitCode': 'wmoUnit:degC', 'value': 12.777777777777779},
+        'relativeHumidity': {'unitCode': 'wmoUnit:percent', 'value': 91},
+        'windSpeed': '15 mph',
+        'windGust': '25 mph',
+        'windDirection': 'WSW',
+        'icon': 'https://api.weather.gov/icons/land/night/rain,40?size=medium',
+        'shortForecast': 'Chance Light Rain',
+        'detailedForecast':
+            'A chance of rain before 5am. Mostly cloudy, with a low around 55. West southwest wind around 15 mph, with gusts as high as 25 mph. Chance of precipitation is 40%. New rainfall amounts less than a tenth of an inch possible.',
+      };
+
+      final expectedGFP = GridpointForecastPeriod.fromJson(actualGFP);
+
+      expect(expectedGFP.number, actualGFP['number']);
+      expect(expectedGFP.name, actualGFP['name']);
+      expect(expectedGFP.startTime, actualGFP['startTime']);
+      expect(expectedGFP.endTime, actualGFP['endTime']);
+      expect(expectedGFP.isDaytime, actualGFP['isDaytime']);
+      expect(expectedGFP.temperature, actualGFP['temperature']);
+      expect(expectedGFP.temperatureUnit, actualGFP['temperatureUnit']);
+      expect(expectedGFP.temperatureTrend, actualGFP['temperatureTrend']);
+      expect(
+        expectedGFP.probabilityOfPrecipitation.toJson(),
+        actualGFP['probabilityOfPrecipitation'],
+      );
+      expect(
+        expectedGFP.dewpoint.toJson(),
+        actualGFP['dewpoint'],
+      );
+      expect(
+        expectedGFP.relativeHumidity.toJson(),
+        actualGFP['relativeHumidity'],
+      );
+      expect(expectedGFP.windSpeed, actualGFP['windSpeed']);
+      expect(expectedGFP.windGust, actualGFP['windGust']);
+      expect(expectedGFP.windDirection, actualGFP['windDirection']);
+      expect(expectedGFP.icon, actualGFP['icon']);
+      expect(expectedGFP.shortForecast, actualGFP['shortForecast']);
+      expect(expectedGFP.detailedForecast, actualGFP['detailedForecast']);
+    });
+  });
+
   group('QuantitativeValue', () {
     const jsonAllFields = {
       'maxValue': 12000,
