@@ -18,53 +18,109 @@ class GridpointForecastJsonLd {
   final QuantitativeValue elevation;
   final List<GridpointForecastPeriod> periods;
 
-  const GridpointForecastJsonLd(
-    this.context,
-    this.geometry,
-    this.updated,
-    this.units,
-    this.forecastGenerator,
-    this.generatedAt,
-    this.updateTime,
-    this.validTimes,
-    this.elevation,
-    this.periods,
-  );
+  const GridpointForecastJsonLd({
+    required this.context,
+    required this.geometry,
+    required this.updated,
+    required this.units,
+    required this.forecastGenerator,
+    required this.generatedAt,
+    required this.updateTime,
+    required this.validTimes,
+    required this.elevation,
+    required this.periods,
+  });
 
   factory GridpointForecastJsonLd.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        '@context': List<Object> context,
-        'geometry': String geometry,
-        'updated': String updated,
-        'units': GridpointForecastUnits units,
-        'forecastGenerator': String forecastGenerator,
-        'generatedAt': String generatedAt,
-        'updateTime': String updateTime,
-        'validTimes': String validTimes,
-        'elevation': QuantitativeValue elevation,
-        'periods': List<GridpointForecastPeriod> periods,
-      } =>
-        GridpointForecastJsonLd(
-          context,
-          geometry,
-          updated,
-          units,
-          forecastGenerator,
-          generatedAt,
-          updateTime,
-          validTimes,
-          elevation,
-          periods,
-        ),
-      _ => throw const FormatException('Failed to serialize weather.'),
-    };
+    final context = json['@context'];
+    if (context is! List<Object>) {
+      throw FormatException(
+        'Invalid JSON: required "context" field of type List<Object> in $json',
+      );
+    }
+
+    final geometry = json['geometry'];
+    if (geometry is! String) {
+      throw FormatException(
+        'Invalid JSON: required "geometry" field of type String in $json',
+      );
+    }
+
+    final updated = json['updated'];
+    if (updated is! String) {
+      throw FormatException(
+        'Invalid JSON: required "updated" field of type String in $json',
+      );
+    }
+
+    final units = json['units'];
+    if (units is! GridpointForecastUnits) {
+      throw FormatException(
+        'Invalid JSON: required "units" field of type GridpointForecastUnits in $json',
+      );
+    }
+
+    final forecastGenerator = json['forecastGenerator'];
+    if (forecastGenerator is! String) {
+      throw FormatException(
+        'Invalid JSON: required "forecastGenerator" field of type String in $json',
+      );
+    }
+
+    final generatedAt = json['generatedAt'];
+    if (generatedAt is! String) {
+      throw FormatException(
+        'Invalid JSON: required "generatedAt" field of type String in $json',
+      );
+    }
+
+    final updateTime = json['updateTime'];
+    if (updateTime is! String) {
+      throw FormatException(
+        'Invalid JSON: required "updateTime" field of type String in $json',
+      );
+    }
+
+    final validTimes = json['validTimes'];
+    if (validTimes is! String) {
+      throw FormatException(
+        'Invalid JSON: required "validTimes" field of type String in $json',
+      );
+    }
+
+    final elevation = json['elevation'];
+    if (elevation is! QuantitativeValue) {
+      throw FormatException(
+        'Invalid JSON: required "elevation" field of type QuantitativeValue in $json',
+      );
+    }
+
+    final periods = json['periods'];
+    if (periods is! List<GridpointForecastPeriod>) {
+      throw FormatException(
+        'Invalid JSON: required "periods" field of type List<GridpointForecastPeriod> in $json',
+      );
+    }
+
+    return GridpointForecastJsonLd(
+      context: context,
+      geometry: geometry,
+      updated: updated,
+      units: units,
+      forecastGenerator: forecastGenerator,
+      generatedAt: generatedAt,
+      updateTime: updateTime,
+      validTimes: validTimes,
+      elevation: elevation,
+      periods: periods,
+    );
   }
 }
 
 enum GridpointForecastUnits { us, si }
 
 class GridpointForecastPeriod {
+  // TODO review these for what's nullable and what's not
   int number;
   String name;
   String startTime;
@@ -86,25 +142,166 @@ class GridpointForecastPeriod {
   String shortForecast;
   String detailedForecast;
 
-  GridpointForecastPeriod(
-    this.number,
-    this.name,
-    this.startTime,
-    this.endTime,
-    this.isDaytime,
-    this.temperature,
-    this.temperatureUnit,
-    this.probabilityOfPrecipitation,
-    this.dewpoint,
-    this.relativeHumidity,
-    this.windSpeed,
-    this.windDirection,
-    this.shortForecast,
-    this.detailedForecast, [
+  GridpointForecastPeriod({
+    required this.number,
+    required this.name,
+    required this.startTime,
+    required this.endTime,
+    required this.isDaytime,
+    required this.temperature,
+    required this.temperatureUnit,
     this.temperatureTrend,
+    required this.probabilityOfPrecipitation,
+    required this.dewpoint,
+    required this.relativeHumidity,
+    required this.windSpeed,
     this.windGust,
+    required this.windDirection,
     this.icon,
-  ]);
+    required this.shortForecast,
+    required this.detailedForecast,
+  });
+
+  factory GridpointForecastPeriod.fromJson(Map<String, dynamic> json) {
+    final number = json['number'];
+    if (number is! int) {
+      throw FormatException(
+        'Invalid JSON: required "number" field of type int in $json',
+      );
+    }
+
+    final name = json['name'];
+    if (name is! String) {
+      throw FormatException(
+        'Invalid JSON: required "name" field of type String in $json',
+      );
+    }
+
+    final startTime = json['startTime'];
+    if (startTime is! String) {
+      throw FormatException(
+        'Invalid JSON: required "startTime" field of type String in $json',
+      );
+    }
+
+    final endTime = json['endTime'];
+    if (endTime is! String) {
+      throw FormatException(
+        'Invalid JSON: required "endTime" field of type String in $json',
+      );
+    }
+
+    final isDaytime = json['isDaytime'];
+    if (isDaytime is! bool) {
+      throw FormatException(
+        'Invalid JSON: required "isDaytime" field of type bool in $json',
+      );
+    }
+
+    final temperature = json['temperature'];
+    if (temperature is! int) {
+      throw FormatException(
+        'Invalid JSON: required "temperature" field of type int in $json',
+      );
+    }
+
+    final temperatureUnit = json['temperatureUnit'];
+    if (temperatureUnit is! String) {
+      throw FormatException(
+        'Invalid JSON: required "temperatureUnit" field of type String in $json',
+      );
+    }
+
+    final temperatureTrend = json['temperatureTrend'];
+    if (temperatureTrend is! String) {
+      throw FormatException(
+        'Invalid JSON: required "temperatureTrend" field of type String in $json',
+      );
+    }
+
+    final probabilityOfPrecipitation = json['probabilityOfPrecipitation'];
+    if (probabilityOfPrecipitation is! QuantitativeValue) {
+      throw FormatException(
+        'Invalid JSON: required "probabilityOfPrecipitation" field of type QuantitativeValue in $json',
+      );
+    }
+
+    final dewpoint = json['dewpoint'];
+    if (dewpoint is! QuantitativeValue) {
+      throw FormatException(
+        'Invalid JSON: required "dewpoint" field of type QuantitativeValue in $json',
+      );
+    }
+
+    final relativeHumidity = json['relativeHumidity'];
+    if (relativeHumidity is! QuantitativeValue) {
+      throw FormatException(
+        'Invalid JSON: required "relativeHumidity" field of type QuantitativeValue in $json',
+      );
+    }
+
+    final windSpeed = json['windSpeed'];
+    if (windSpeed is! String) {
+      throw FormatException(
+        'Invalid JSON: required "windSpeed" field of type String in $json',
+      );
+    }
+
+    final windGust = json['windGust'];
+    if (windGust is! String) {
+      throw FormatException(
+        'Invalid JSON: required "windGust" field of type String in $json',
+      );
+    }
+
+    final windDirection = json['windDirection'];
+    if (windDirection is! String) {
+      throw FormatException(
+        'Invalid JSON: required "windDirection" field of type String in $json',
+      );
+    }
+
+    final icon = json['icon'];
+    if (icon is! String) {
+      throw FormatException(
+        'Invalid JSON: required "icon" field of type String in $json',
+      );
+    }
+
+    final shortForecast = json['shortForecast'];
+    if (shortForecast is! String) {
+      throw FormatException(
+        'Invalid JSON: required "shortForecast" field of type String in $json',
+      );
+    }
+
+    final detailedForecast = json['detailedForecast'];
+    if (detailedForecast is! String) {
+      throw FormatException(
+        'Invalid JSON: required "detailedForecast" field of type String in $json',
+      );
+    }
+
+    return GridpointForecastPeriod(
+      number: number,
+      name: name,
+      startTime: startTime,
+      endTime: endTime,
+      isDaytime: isDaytime,
+      temperature: temperature,
+      temperatureUnit: temperatureUnit,
+      temperatureTrend: temperatureTrend,
+      probabilityOfPrecipitation: probabilityOfPrecipitation,
+      dewpoint: dewpoint,
+      relativeHumidity: relativeHumidity,
+      windSpeed: windSpeed,
+      windGust: windGust,
+      windDirection: windDirection,
+      icon: icon,
+      shortForecast: shortForecast,
+      detailedForecast: detailedForecast,
+    );
+  }
 }
 
 class QuantitativeValue {
