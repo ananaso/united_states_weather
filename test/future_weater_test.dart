@@ -27,7 +27,7 @@ void main() {
         ),
       ),
     ).thenAnswer(
-      (_) async => http.Response(weatherGovForecastResponseJsonString, 200),
+      (_) async => http.Response(weatherGovForecastResponseJson, 200),
     );
 
     // Build our app and trigger a frame.

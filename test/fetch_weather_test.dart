@@ -26,7 +26,7 @@ void main() {
           ),
         ),
       ).thenAnswer(
-        (_) async => http.Response(weatherGovForecastResponseJsonString, 200),
+        (_) async => http.Response(weatherGovForecastResponseJson, 200),
       );
 
       expect(await fetchWeather(client), isA<Map<String, dynamic>>());
@@ -43,7 +43,7 @@ void main() {
         ),
       ),
     ).thenAnswer(
-      (_) async => http.Response(weatherGovForecastErrorJsonString, 500),
+      (_) async => http.Response(weatherGovForecastErrorJson, 500),
     );
   });
 }

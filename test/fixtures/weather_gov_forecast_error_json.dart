@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-String weatherGovForecastErrorJsonString =
-    jsonEncode(weatherGovForecastErrorJson);
+String weatherGovForecastErrorJson = jsonEncode(weatherGovForecastErrorJsonMap);
 
-const Map<String, Object> weatherGovForecastErrorJson = <String, Object>{
+const Map<String, Object> weatherGovForecastErrorJsonMap = <String, Object>{
   'type': 'urn:noaa:nws:api:UnexpectedProblem',
   'title': 'Unexpected Problem',
   'status': 500,

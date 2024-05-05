@@ -5,7 +5,7 @@ import 'fixtures/weather_gov_forecast_response_json.dart';
 
 void main() {
   group('GridpointForecastJsonLd', () {
-    const fullResponseJson = weatherGovForecastResponseJson;
+    const fullResponseJson = weatherGovForecastResponseJsonMap;
     final context = fullResponseJson['@context'];
     final geometry = fullResponseJson['geometry'];
     final updated = fullResponseJson['updated'];

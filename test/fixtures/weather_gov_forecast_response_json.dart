@@ -2,10 +2,10 @@
 
 import 'dart:convert';
 
-String weatherGovForecastResponseJsonString =
-    jsonEncode(weatherGovForecastResponseJson);
+String weatherGovForecastResponseJson =
+    jsonEncode(weatherGovForecastResponseJsonMap);
 
-const Map<String, Object> weatherGovForecastResponseJson = <String, Object>{
+const Map<String, Object> weatherGovForecastResponseJsonMap = <String, Object>{
   '@context': {
     '@version': '1.1',
     'wx': 'https://api.weather.gov/ontology#',
