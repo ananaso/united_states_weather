@@ -28,9 +28,9 @@ class _FutureWeatherState extends State<FutureWeather> {
       future: futureWeather,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Text('${snapshot.data!.periods[0].temperature}'
-              ' °'
-              '${snapshot.data!.periods[0].temperatureUnit}');
+          return Text(
+            '${snapshot.data!.periods[0].temperature} °${snapshot.data!.periods[0].temperatureUnit}',
+          );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }

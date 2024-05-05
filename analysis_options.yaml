@@ -31,7 +31,6 @@ linter:
     always_declare_return_types: true # Declare method return types.
     avoid_escaping_inner_quotes: true # Avoid escaping inner quotes by converting surrounding quotes.
     eol_at_end_of_file: true  # Put a single newline at end of file.]
-    lines_longer_than_80_chars: true  # Avoid lines longer than 80 characters.
     parameter_assignments: true # Don't reassign references to parameters of functions or methods.
     prefer_foreach: true  # Use forEach to only apply a function to all the elements.
     prefer_int_literals: true # Prefer int literals over double literals.
