@@ -333,7 +333,7 @@ class QuantitativeValue {
 
     final qualityControlRaw = json['qualityControl'];
     var qualityControl = qualityControlRaw != null
-        ? QualityControlFlag.values.byName(json['qualityControl'] as String)
+        ? QualityControlFlag.values.byName(qualityControlRaw as String)
         : null;
 
     return QuantitativeValue(
@@ -343,6 +343,16 @@ class QuantitativeValue {
       minValue: minValue,
       qualityControl: qualityControl,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (value != null) 'value': value,
+      if (maxValue != null) 'maxValue': maxValue,
+      if (minValue != null) 'minValue': minValue,
+      'unitCode': unitCode,
+      if (qualityControl != null) 'qualityControl': qualityControl?.name,
+    };
   }
 }
 

@@ -17,7 +17,7 @@ void main() {
     final elevation = fullResponseJson['elevation'];
     final periods = fullResponseJson['periods'];
 
-    test('deserializes JSON into all fields', () {
+    test('deserializes JSON to all fields', () {
       final weatherData = GridpointForecastJsonLd.fromJson(fullResponseJson);
 
       expect(
@@ -64,33 +64,63 @@ void main() {
   });
 
   group('QuantitativeValue', () {
+    const jsonAllFields = {
+      'maxValue': 12000,
+      'minValue': 0,
+      'qualityControl': 'G',
+      'unitCode': 'wmoUnit:m',
+      'value': 9001,
+    };
+    const jsonRequiredFields = {'unitCode': 'wmoUnit:m'};
+
     test(
-      'deserializes JSON into all fields',
+      'deserializes JSON to all fields',
       () {
-        final actualQV = {
-          'maxValue': 12000,
-          'minValue': 0,
-          'qualityControl': 'G',
-          'unitCode': 'wmoUnit:m',
-          'value': 9001,
-        };
+        const expectedQV = jsonAllFields;
 
-        final expectedQV = QuantitativeValue.fromJson(actualQV);
+        final actualQV = QuantitativeValue.fromJson(expectedQV);
 
-        expect(expectedQV.maxValue, actualQV['maxValue']);
-        expect(expectedQV.minValue, actualQV['minValue']);
-        expect(expectedQV.qualityControl?.name, actualQV['qualityControl']);
-        expect(expectedQV.unitCode, actualQV['unitCode']);
-        expect(expectedQV.value, actualQV['value']);
+        expect(actualQV.maxValue, expectedQV['maxValue']);
+        expect(actualQV.minValue, expectedQV['minValue']);
+        expect(actualQV.qualityControl?.name, expectedQV['qualityControl']);
+        expect(actualQV.unitCode, expectedQV['unitCode']);
+        expect(actualQV.value, expectedQV['value']);
       },
     );
 
     test('deserializes JSON with just the required fields', () {
-      final actualQV = {'unitCode': 'wmoUnit:m'};
+      const expectedQV = jsonRequiredFields;
 
-      final expectedQV = QuantitativeValue.fromJson(actualQV);
+      final actualQV = QuantitativeValue.fromJson(expectedQV);
 
-      expect(expectedQV.unitCode, actualQV['unitCode']);
+      expect(actualQV.unitCode, expectedQV['unitCode']);
+    });
+
+    test('throws FormatException if unitCode is missing', () {
+      const Map<String, dynamic> actualQv = {};
+
+      expect(
+        () => QuantitativeValue.fromJson(actualQv),
+        throwsA(isA<FormatException>()),
+      );
+    });
+
+    test('serializes all fields to JSON', () {
+      const expectedJson = jsonAllFields;
+
+      final qv = QuantitativeValue.fromJson(expectedJson);
+      final actualJson = qv.toJson();
+
+      expect(actualJson, expectedJson);
+    });
+
+    test('serializes just required fields to JSON', () {
+      const expectedJson = jsonRequiredFields;
+
+      final qv = QuantitativeValue.fromJson(expectedJson);
+      final actualJson = qv.toJson();
+
+      expect(actualJson, expectedJson);
     });
   });
 }
