@@ -17,7 +17,7 @@ void main() {
     final elevation = fullResponseJson['elevation'];
     final periods = fullResponseJson['periods'];
 
-    test('returns the JSON serialized into a plain model class', () {
+    test('deserializes JSON into all fields', () {
       final weatherData = GridpointForecastJsonLd.fromJson(fullResponseJson);
 
       expect(
@@ -60,6 +60,37 @@ void main() {
         weatherData.periods,
         periods,
       );
+    });
+  });
+
+  group('QuantitativeValue', () {
+    test(
+      'deserializes JSON into all fields',
+      () {
+        final actualQV = {
+          'maxValue': 12000,
+          'minValue': 0,
+          'qualityControl': 'G',
+          'unitCode': 'wmoUnit:m',
+          'value': 9001,
+        };
+
+        final expectedQV = QuantitativeValue.fromJson(actualQV);
+
+        expect(expectedQV.maxValue, actualQV['maxValue']);
+        expect(expectedQV.minValue, actualQV['minValue']);
+        expect(expectedQV.qualityControl?.name, actualQV['qualityControl']);
+        expect(expectedQV.unitCode, actualQV['unitCode']);
+        expect(expectedQV.value, actualQV['value']);
+      },
+    );
+
+    test('deserializes JSON with just the required fields', () {
+      final actualQV = {'unitCode': 'wmoUnit:m'};
+
+      final expectedQV = QuantitativeValue.fromJson(actualQV);
+
+      expect(expectedQV.unitCode, actualQV['unitCode']);
     });
   });
 }

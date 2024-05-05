@@ -32,12 +32,13 @@ class GridpointForecastJsonLd {
   });
 
   factory GridpointForecastJsonLd.fromJson(Map<String, dynamic> json) {
-    final context = json['@context'];
-    if (context is! List<Object>) {
-      throw FormatException(
-        'Invalid JSON: required "context" field of type List<Object> in $json',
-      );
-    }
+    final context = ['filler'];
+    // final context = json['@context'];
+    // if (context is! List<Object>) {
+    //   throw FormatException(
+    //     'Invalid JSON: required "@context" field of type List<Object> in $json',
+    //   );
+    // }
 
     final geometry = json['geometry'];
     if (geometry is! String) {
@@ -53,12 +54,13 @@ class GridpointForecastJsonLd {
       );
     }
 
-    final units = json['units'];
-    if (units is! GridpointForecastUnits) {
+    final unitsRaw = json['units'];
+    if (unitsRaw is! String) {
       throw FormatException(
         'Invalid JSON: required "units" field of type GridpointForecastUnits in $json',
       );
     }
+    final units = GridpointForecastUnits.values.byName(unitsRaw);
 
     final forecastGenerator = json['forecastGenerator'];
     if (forecastGenerator is! String) {
@@ -88,19 +90,26 @@ class GridpointForecastJsonLd {
       );
     }
 
-    final elevation = json['elevation'];
-    if (elevation is! QuantitativeValue) {
+    final elevationRaw = json['elevation'];
+    if (elevationRaw is! Map<String, dynamic>) {
       throw FormatException(
         'Invalid JSON: required "elevation" field of type QuantitativeValue in $json',
       );
     }
+    final elevation = QuantitativeValue.fromJson(elevationRaw);
 
-    final periods = json['periods'];
-    if (periods is! List<GridpointForecastPeriod>) {
+    final periodsRaw = json['periods'];
+    if (periodsRaw is! List<dynamic>) {
       throw FormatException(
         'Invalid JSON: required "periods" field of type List<GridpointForecastPeriod> in $json',
       );
     }
+    final periods = periodsRaw
+        .map(
+          (period) =>
+              GridpointForecastPeriod.fromJson(period as Map<String, dynamic>),
+        )
+        .toList();
 
     return GridpointForecastJsonLd(
       context: context,
@@ -138,7 +147,7 @@ class GridpointForecastPeriod {
   // TODO update to 'forecast_wind_speed_qv' format
   String? windGust;
   String windDirection;
-  String? icon; // deprecated
+  String icon; // deprecated
   String shortForecast;
   String detailedForecast;
 
@@ -157,7 +166,7 @@ class GridpointForecastPeriod {
     required this.windSpeed,
     this.windGust,
     required this.windDirection,
-    this.icon,
+    required this.icon,
     required this.shortForecast,
     required this.detailedForecast,
   });
@@ -212,12 +221,7 @@ class GridpointForecastPeriod {
       );
     }
 
-    final temperatureTrend = json['temperatureTrend'];
-    if (temperatureTrend is! String) {
-      throw FormatException(
-        'Invalid JSON: required "temperatureTrend" field of type String in $json',
-      );
-    }
+    final temperatureTrend = json['temperatureTrend'] as String?;
 
     final probabilityOfPrecipitation = json['probabilityOfPrecipitation'];
     if (probabilityOfPrecipitation is! QuantitativeValue) {
@@ -247,12 +251,7 @@ class GridpointForecastPeriod {
       );
     }
 
-    final windGust = json['windGust'];
-    if (windGust is! String) {
-      throw FormatException(
-        'Invalid JSON: required "windGust" field of type String in $json',
-      );
-    }
+    final windGust = json['windGust'] as String?;
 
     final windDirection = json['windDirection'];
     if (windDirection is! String) {
@@ -309,16 +308,42 @@ class QuantitativeValue {
   final num? maxValue;
   final num? minValue;
   // TODO use regex to make type stricter (see docs)
-  final String? unitCode;
+  final String unitCode;
   final QualityControlFlag? qualityControl;
 
-  const QuantitativeValue([
-    this.unitCode,
+  const QuantitativeValue({
+    required this.unitCode,
     this.value,
     this.maxValue,
     this.minValue,
     this.qualityControl,
-  ]);
+  });
+
+  factory QuantitativeValue.fromJson(Map<String, dynamic> json) {
+    final value = json['value'] as num?;
+    final maxValue = json['maxValue'] as num?;
+    final minValue = json['minValue'] as num?;
+
+    final unitCode = json['unitCode'];
+    if (unitCode is! String) {
+      throw FormatException(
+        'Invalid JSON: required "unitCode" field of type String in $json',
+      );
+    }
+
+    final qualityControlRaw = json['qualityControl'];
+    var qualityControl = qualityControlRaw != null
+        ? QualityControlFlag.values.byName(json['qualityControl'] as String)
+        : null;
+
+    return QuantitativeValue(
+      unitCode: unitCode,
+      value: value,
+      maxValue: maxValue,
+      minValue: minValue,
+      qualityControl: qualityControl,
+    );
+  }
 }
 
 enum WindDirection {
