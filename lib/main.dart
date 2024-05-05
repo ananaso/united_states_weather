@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:united_states_weather/fetch_weather.dart';
+import 'package:http/http.dart' as http;
+import 'package:united_states_weather/future_weather.dart';
 
 void main() {
   runApp(const UnitedStatesWeather());
@@ -32,14 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Future<GridpointForecastJsonLd> futureWeather;
-
-  @override
-  void initState() {
-    super.initState();
-    futureWeather = fetchWeather();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,26 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: FutureBuilder(
-          future: futureWeather,
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<GridpointForecastJsonLd> snapshot,
-          ) {
-            if (snapshot.hasData) {
-              return Text('${snapshot.data!.periods[0].temperature}'
-                  ' °'
-                  '${snapshot.data!.periods[0].temperatureUnit}');
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-
-            // By default, show a loading spinner
-            return const CircularProgressIndicator();
-          },
-        ),
-      ),
+      body: Center(child: FutureWeather(client: http.Client())),
     );
   }
 }

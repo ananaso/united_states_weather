@@ -6,7 +6,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:united_states_weather/fetch_weather.dart';
 
-import 'fetch_weather_test.mocks.dart';
+import 'mocks/fetch_weather_test.mocks.dart';
 
 // Generate a MockClient using the Mockito package.
 // Create new instances of this class in each test.
