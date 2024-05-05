@@ -65,7 +65,7 @@ void main() {
 
   group('GridpointForecastPeriod', () {
     test('deserializes JSON to all fields', () {
-      const actualGFP = {
+      const expectedGFP = {
         'number': 1,
         'name': 'Tonight',
         'startTime': '2024-05-04T20:00:00-07:00',
@@ -89,34 +89,34 @@ void main() {
             'A chance of rain before 5am. Mostly cloudy, with a low around 55. West southwest wind around 15 mph, with gusts as high as 25 mph. Chance of precipitation is 40%. New rainfall amounts less than a tenth of an inch possible.',
       };
 
-      final expectedGFP = GridpointForecastPeriod.fromJson(actualGFP);
+      final actualGFP = GridpointForecastPeriod.fromJson(expectedGFP);
 
-      expect(expectedGFP.number, actualGFP['number']);
-      expect(expectedGFP.name, actualGFP['name']);
-      expect(expectedGFP.startTime, actualGFP['startTime']);
-      expect(expectedGFP.endTime, actualGFP['endTime']);
-      expect(expectedGFP.isDaytime, actualGFP['isDaytime']);
-      expect(expectedGFP.temperature, actualGFP['temperature']);
-      expect(expectedGFP.temperatureUnit, actualGFP['temperatureUnit']);
-      expect(expectedGFP.temperatureTrend, actualGFP['temperatureTrend']);
+      expect(actualGFP.number, expectedGFP['number']);
+      expect(actualGFP.name, expectedGFP['name']);
+      expect(actualGFP.startTime, expectedGFP['startTime']);
+      expect(actualGFP.endTime, expectedGFP['endTime']);
+      expect(actualGFP.isDaytime, expectedGFP['isDaytime']);
+      expect(actualGFP.temperature, expectedGFP['temperature']);
+      expect(actualGFP.temperatureUnit, expectedGFP['temperatureUnit']);
+      expect(actualGFP.temperatureTrend, expectedGFP['temperatureTrend']);
       expect(
-        expectedGFP.probabilityOfPrecipitation.toJson(),
-        actualGFP['probabilityOfPrecipitation'],
+        actualGFP.probabilityOfPrecipitation.toJson(),
+        expectedGFP['probabilityOfPrecipitation'],
       );
       expect(
-        expectedGFP.dewpoint.toJson(),
-        actualGFP['dewpoint'],
+        actualGFP.dewpoint.toJson(),
+        expectedGFP['dewpoint'],
       );
       expect(
-        expectedGFP.relativeHumidity.toJson(),
-        actualGFP['relativeHumidity'],
+        actualGFP.relativeHumidity.toJson(),
+        expectedGFP['relativeHumidity'],
       );
-      expect(expectedGFP.windSpeed, actualGFP['windSpeed']);
-      expect(expectedGFP.windGust, actualGFP['windGust']);
-      expect(expectedGFP.windDirection, actualGFP['windDirection']);
-      expect(expectedGFP.icon, actualGFP['icon']);
-      expect(expectedGFP.shortForecast, actualGFP['shortForecast']);
-      expect(expectedGFP.detailedForecast, actualGFP['detailedForecast']);
+      expect(actualGFP.windSpeed, expectedGFP['windSpeed']);
+      expect(actualGFP.windGust, expectedGFP['windGust']);
+      expect(actualGFP.windDirection, expectedGFP['windDirection']);
+      expect(actualGFP.icon, expectedGFP['icon']);
+      expect(actualGFP.shortForecast, expectedGFP['shortForecast']);
+      expect(actualGFP.detailedForecast, expectedGFP['detailedForecast']);
     });
   });
 
