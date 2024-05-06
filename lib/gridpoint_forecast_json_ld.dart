@@ -300,6 +300,28 @@ class GridpointForecastPeriod {
       detailedForecast: detailedForecast,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'number': number,
+      'name': name,
+      'startTime': startTime,
+      'endTime': endTime,
+      'isDaytime': isDaytime,
+      'temperature': temperature,
+      'temperatureUnit': temperatureUnit,
+      if (temperatureTrend != null) 'temperatureTrend': temperatureTrend,
+      'probabilityOfPrecipitation': probabilityOfPrecipitation.toJson(),
+      'dewpoint': dewpoint.toJson(),
+      'relativeHumidity': relativeHumidity.toJson(),
+      'windSpeed': windSpeed,
+      if (windGust != null) 'windGust': windGust,
+      'windDirection': windDirection,
+      'icon': icon,
+      'shortForecast': shortForecast,
+      'detailedForecast': detailedForecast,
+    };
+  }
 }
 
 class QuantitativeValue {

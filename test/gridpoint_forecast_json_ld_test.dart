@@ -140,6 +140,26 @@ void main() {
         throwsA(isA<FormatException>()),
       );
     });
+
+    test('serializes all fields to JSON', () {
+      const expectedJson = jsonAllFields;
+
+      final gfp = GridpointForecastPeriod.fromJson(expectedJson);
+      final actualJson = gfp.toJson();
+
+      expect(actualJson, expectedJson);
+    });
+
+    test('serializes just required fields to JSON', () {
+      final expectedJson = {...jsonAllFields};
+      expectedJson.remove('temperatureTrend');
+      expectedJson.remove('windGust');
+
+      final gfp = GridpointForecastPeriod.fromJson(expectedJson);
+      final actualJson = gfp.toJson();
+
+      expect(actualJson, expectedJson);
+    });
   });
 
   group('QuantitativeValue', () {
