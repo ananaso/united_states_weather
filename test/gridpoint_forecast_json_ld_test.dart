@@ -64,30 +64,32 @@ void main() {
   });
 
   group('GridpointForecastPeriod', () {
+    const jsonAllFields = {
+      'number': 1,
+      'name': 'Tonight',
+      'startTime': '2024-05-04T20:00:00-07:00',
+      'endTime': '2024-05-05T06:00:00-07:00',
+      'isDaytime': false,
+      'temperature': 55,
+      'temperatureUnit': 'F',
+      'temperatureTrend': '[fake value] falling?',
+      'probabilityOfPrecipitation': {
+        'unitCode': 'wmoUnit:percent',
+        'value': 40,
+      },
+      'dewpoint': {'unitCode': 'wmoUnit:degC', 'value': 12.777777777777779},
+      'relativeHumidity': {'unitCode': 'wmoUnit:percent', 'value': 91},
+      'windSpeed': '15 mph',
+      'windGust': '[fake value] 25 mph',
+      'windDirection': 'WSW',
+      'icon': 'https://api.weather.gov/icons/land/night/rain,40?size=medium',
+      'shortForecast': 'Chance Light Rain',
+      'detailedForecast':
+          'A chance of rain before 5am. Mostly cloudy, with a low around 55. West southwest wind around 15 mph, with gusts as high as 25 mph. Chance of precipitation is 40%. New rainfall amounts less than a tenth of an inch possible.',
+    };
+
     test('deserializes JSON to all fields', () {
-      const expectedGFP = {
-        'number': 1,
-        'name': 'Tonight',
-        'startTime': '2024-05-04T20:00:00-07:00',
-        'endTime': '2024-05-05T06:00:00-07:00',
-        'isDaytime': false,
-        'temperature': 55,
-        'temperatureUnit': 'F',
-        'temperatureTrend': null,
-        'probabilityOfPrecipitation': {
-          'unitCode': 'wmoUnit:percent',
-          'value': 40,
-        },
-        'dewpoint': {'unitCode': 'wmoUnit:degC', 'value': 12.777777777777779},
-        'relativeHumidity': {'unitCode': 'wmoUnit:percent', 'value': 91},
-        'windSpeed': '15 mph',
-        'windGust': '25 mph',
-        'windDirection': 'WSW',
-        'icon': 'https://api.weather.gov/icons/land/night/rain,40?size=medium',
-        'shortForecast': 'Chance Light Rain',
-        'detailedForecast':
-            'A chance of rain before 5am. Mostly cloudy, with a low around 55. West southwest wind around 15 mph, with gusts as high as 25 mph. Chance of precipitation is 40%. New rainfall amounts less than a tenth of an inch possible.',
-      };
+      const expectedGFP = jsonAllFields;
 
       final actualGFP = GridpointForecastPeriod.fromJson(expectedGFP);
 
@@ -117,6 +119,26 @@ void main() {
       expect(actualGFP.icon, expectedGFP['icon']);
       expect(actualGFP.shortForecast, expectedGFP['shortForecast']);
       expect(actualGFP.detailedForecast, expectedGFP['detailedForecast']);
+    });
+
+    test('deserializes JSON with just the required fields', () {
+      final expectedGFP = {...jsonAllFields};
+      expectedGFP.remove('temperatureTrend');
+      expectedGFP.remove('windGust');
+
+      final actualGFP = GridpointForecastPeriod.fromJson(expectedGFP);
+
+      expect(actualGFP.temperatureTrend, null);
+      expect(actualGFP.windGust, null);
+    });
+
+    test('throws FormatException if number is missing', () {
+      const Map<String, dynamic> actualGFP = {};
+
+      expect(
+        () => GridpointForecastPeriod.fromJson(actualGFP),
+        throwsA(isA<FormatException>()),
+      );
     });
   });
 
@@ -150,7 +172,10 @@ void main() {
 
       final actualQV = QuantitativeValue.fromJson(expectedQV);
 
-      expect(actualQV.unitCode, expectedQV['unitCode']);
+      expect(actualQV.maxValue, null);
+      expect(actualQV.minValue, null);
+      expect(actualQV.qualityControl, null);
+      expect(actualQV.value, null);
     });
 
     test('throws FormatException if unitCode is missing', () {
