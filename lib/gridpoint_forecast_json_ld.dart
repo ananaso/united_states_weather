@@ -310,12 +310,12 @@ class GridpointForecastPeriod {
       'isDaytime': isDaytime,
       'temperature': temperature,
       'temperatureUnit': temperatureUnit,
-      if (temperatureTrend != null) 'temperatureTrend': temperatureTrend,
+      'temperatureTrend': temperatureTrend,
       'probabilityOfPrecipitation': probabilityOfPrecipitation.toJson(),
       'dewpoint': dewpoint.toJson(),
       'relativeHumidity': relativeHumidity.toJson(),
       'windSpeed': windSpeed,
-      if (windGust != null) 'windGust': windGust,
+      'windGust': windGust,
       'windDirection': windDirection,
       'icon': icon,
       'shortForecast': shortForecast,
@@ -368,11 +368,11 @@ class QuantitativeValue {
 
   Map<String, dynamic> toJson() {
     return {
-      if (value != null) 'value': value,
-      if (maxValue != null) 'maxValue': maxValue,
-      if (minValue != null) 'minValue': minValue,
+      'value': value,
+      'maxValue': maxValue,
+      'minValue': minValue,
       'unitCode': unitCode,
-      if (qualityControl != null) 'qualityControl': qualityControl?.name,
+      'qualityControl': qualityControl?.name,
     };
   }
 }

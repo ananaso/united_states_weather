@@ -64,6 +64,13 @@ void main() {
   });
 
   group('GridpointForecastPeriod', () {
+    const mockQV = {
+      'unitCode': 'wmoUnit:percent',
+      'value': 40,
+      'maxValue': null,
+      'minValue': null,
+      'qualityControl': null,
+    };
     const jsonAllFields = {
       'number': 1,
       'name': 'Tonight',
@@ -73,14 +80,31 @@ void main() {
       'temperature': 55,
       'temperatureUnit': 'F',
       'temperatureTrend': '[fake value] falling?',
-      'probabilityOfPrecipitation': {
-        'unitCode': 'wmoUnit:percent',
-        'value': 40,
-      },
-      'dewpoint': {'unitCode': 'wmoUnit:degC', 'value': 12.777777777777779},
-      'relativeHumidity': {'unitCode': 'wmoUnit:percent', 'value': 91},
+      'probabilityOfPrecipitation': mockQV,
+      'dewpoint': mockQV,
+      'relativeHumidity': mockQV,
       'windSpeed': '15 mph',
       'windGust': '[fake value] 25 mph',
+      'windDirection': 'WSW',
+      'icon': 'https://api.weather.gov/icons/land/night/rain,40?size=medium',
+      'shortForecast': 'Chance Light Rain',
+      'detailedForecast':
+          'A chance of rain before 5am. Mostly cloudy, with a low around 55. West southwest wind around 15 mph, with gusts as high as 25 mph. Chance of precipitation is 40%. New rainfall amounts less than a tenth of an inch possible.',
+    };
+    const jsonRequiredFields = {
+      'number': 1,
+      'name': 'Tonight',
+      'startTime': '2024-05-04T20:00:00-07:00',
+      'endTime': '2024-05-05T06:00:00-07:00',
+      'isDaytime': false,
+      'temperature': 55,
+      'temperatureUnit': 'F',
+      'temperatureTrend': null,
+      'probabilityOfPrecipitation': mockQV,
+      'dewpoint': mockQV,
+      'relativeHumidity': mockQV,
+      'windSpeed': '15 mph',
+      'windGust': null,
       'windDirection': 'WSW',
       'icon': 'https://api.weather.gov/icons/land/night/rain,40?size=medium',
       'shortForecast': 'Chance Light Rain',
@@ -122,9 +146,7 @@ void main() {
     });
 
     test('deserializes JSON with just the required fields', () {
-      final expectedGFP = {...jsonAllFields};
-      expectedGFP.remove('temperatureTrend');
-      expectedGFP.remove('windGust');
+      const expectedGFP = jsonRequiredFields;
 
       final actualGFP = GridpointForecastPeriod.fromJson(expectedGFP);
 
@@ -150,10 +172,8 @@ void main() {
       expect(actualJson, expectedJson);
     });
 
-    test('serializes just required fields to JSON', () {
-      final expectedJson = {...jsonAllFields};
-      expectedJson.remove('temperatureTrend');
-      expectedJson.remove('windGust');
+    test('serializes nullable fields to JSON', () {
+      const expectedJson = jsonRequiredFields;
 
       final gfp = GridpointForecastPeriod.fromJson(expectedJson);
       final actualJson = gfp.toJson();
@@ -170,7 +190,13 @@ void main() {
       'unitCode': 'wmoUnit:m',
       'value': 9001,
     };
-    const jsonRequiredFields = {'unitCode': 'wmoUnit:m'};
+    const jsonRequiredFields = {
+      'maxValue': null,
+      'minValue': null,
+      'qualityControl': null,
+      'unitCode': 'wmoUnit:m',
+      'value': null,
+    };
 
     test(
       'deserializes JSON to all fields',
@@ -216,7 +242,7 @@ void main() {
       expect(actualJson, expectedJson);
     });
 
-    test('serializes just required fields to JSON', () {
+    test('serializes nullable fields to JSON', () {
       const expectedJson = jsonRequiredFields;
 
       final qv = QuantitativeValue.fromJson(expectedJson);
