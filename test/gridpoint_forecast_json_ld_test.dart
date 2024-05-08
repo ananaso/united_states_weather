@@ -1,76 +1,75 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
-import 'fixtures/weather_gov_forecast_response_json.dart';
+import 'mocks/gridpoint_forecast_json_ld_test.mocks.dart';
 
 void main() {
   group('GridpointForecastJsonLd', () {
-    const fullResponseJson = weatherGovForecastResponseJsonMap;
-    final context = fullResponseJson['@context'];
-    final geometry = fullResponseJson['geometry'];
-    final updated = fullResponseJson['updated'];
-    final units = fullResponseJson['units'];
-    final forecastGenerator = fullResponseJson['forecastGenerator'];
-    final generatedAt = fullResponseJson['generatedAt'];
-    final updateTime = fullResponseJson['updateTime'];
-    final validTimes = fullResponseJson['validTimes'];
-    final elevation = fullResponseJson['elevation'];
-    final periods = fullResponseJson['periods'];
+    const jsonAllFields = {
+      '@context': {
+        '@version': '1.1',
+        'wx': 'https://api.weather.gov/ontology#',
+        'geo': 'http://www.opengis.net/ont/geosparql#',
+        'unit': 'http://codes.wmo.int/common/unit/',
+        '@vocab': 'https://api.weather.gov/ontology#',
+      },
+      'geometry':
+          'POLYGON((-118.4074018 33.8356153,-118.4027399 33.8134049,-118.3759623 33.8172817,-118.3806192 33.8394926,-118.4074018 33.8356153))',
+      'updated': '2024-05-05T02:10:26+00:00',
+      'units': 'us',
+      'forecastGenerator': 'BaselineForecastGenerator',
+      'generatedAt': '2024-05-05T03:08:38+00:00',
+      'updateTime': '2024-05-05T02:10:26+00:00',
+      'validTimes': '2024-05-04T20:00:00+00:00/P7DT8H',
+      'elevation': mockQV,
+      'periods': [mockGFP],
+    };
 
     test('deserializes JSON to all fields', () {
-      final weatherData = GridpointForecastJsonLd.fromJson(fullResponseJson);
+      const expectedGFJL = jsonAllFields;
+
+      final actualGFJL = GridpointForecastJsonLd.fromJson(expectedGFJL);
 
       expect(
-        weatherData.context,
-        context,
+        actualGFJL.geometry,
+        expectedGFJL['geometry'],
       );
       expect(
-        weatherData.geometry,
-        geometry,
+        actualGFJL.updated,
+        expectedGFJL['updated'],
       );
       expect(
-        weatherData.updated,
-        updated,
+        actualGFJL.units.name,
+        expectedGFJL['units'],
       );
       expect(
-        weatherData.units,
-        units,
+        actualGFJL.forecastGenerator,
+        expectedGFJL['forecastGenerator'],
       );
       expect(
-        weatherData.forecastGenerator,
-        forecastGenerator,
+        actualGFJL.generatedAt,
+        expectedGFJL['generatedAt'],
       );
       expect(
-        weatherData.generatedAt,
-        generatedAt,
+        actualGFJL.updateTime,
+        expectedGFJL['updateTime'],
       );
       expect(
-        weatherData.updateTime,
-        updateTime,
+        actualGFJL.validTimes,
+        expectedGFJL['validTimes'],
       );
       expect(
-        weatherData.validTimes,
-        validTimes,
+        actualGFJL.elevation.toJson(),
+        expectedGFJL['elevation'],
       );
       expect(
-        weatherData.elevation,
-        elevation,
-      );
-      expect(
-        weatherData.periods,
-        periods,
+        actualGFJL.periods.map((period) => period.toJson()),
+        expectedGFJL['periods'],
       );
     });
   });
 
   group('GridpointForecastPeriod', () {
-    const mockQV = {
-      'unitCode': 'wmoUnit:percent',
-      'value': 40,
-      'maxValue': null,
-      'minValue': null,
-      'qualityControl': null,
-    };
     const jsonAllFields = {
       'number': 1,
       'name': 'Tonight',

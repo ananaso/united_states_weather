@@ -126,8 +126,6 @@ class GridpointForecastJsonLd {
   }
 }
 
-enum GridpointForecastUnits { us, si }
-
 class GridpointForecastPeriod {
   // TODO review these for what's nullable and what's not
   int number;
@@ -377,6 +375,10 @@ class QuantitativeValue {
   }
 }
 
+enum GridpointForecastUnits { us, si }
+
+enum QualityControlFlag { Z, C, S, V, X, Q, G, B, T }
+
 enum WindDirection {
   N,
   NNE,
@@ -395,5 +397,3 @@ enum WindDirection {
   NW,
   NNW
 }
-
-enum QualityControlFlag { Z, C, S, V, X, Q, G, B, T }
