@@ -5,6 +5,7 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
@@ -33,9 +34,18 @@ void main() {
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(
-      FutureWeather(
-        client: client,
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: FutureWeather(
+          client: client,
+        ),
       ),
+    );
+
+    await tester.pumpAndSettle(
+      Durations.short1,
+      EnginePhase.build,
+      Durations.short2,
     );
 
     expect(find.text('55 °F'), findsOneWidget);

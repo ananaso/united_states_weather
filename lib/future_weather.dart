@@ -30,6 +30,7 @@ class _FutureWeatherState extends State<FutureWeather> {
         if (snapshot.hasData) {
           return Text(
             '${snapshot.data!.periods[0].temperature} °${snapshot.data!.periods[0].temperatureUnit}',
+            style: const TextStyle(fontSize: 32),
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');

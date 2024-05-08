@@ -5,7 +5,7 @@ import 'mocks/gridpoint_forecast_json_ld_test.mocks.dart';
 
 void main() {
   group('GridpointForecastJsonLd', () {
-    const jsonAllFields = {
+    final jsonAllFields = {
       '@context': {
         '@version': '1.1',
         'wx': 'https://api.weather.gov/ontology#',
@@ -22,11 +22,11 @@ void main() {
       'updateTime': '2024-05-05T02:10:26+00:00',
       'validTimes': '2024-05-04T20:00:00+00:00/P7DT8H',
       'elevation': mockQV,
-      'periods': [mockGFP],
+      'periods': [mockGFP(number: 0), mockGFP(number: 1), mockGFP(number: 2)],
     };
 
     test('deserializes JSON to all fields', () {
-      const expectedGFJL = jsonAllFields;
+      final expectedGFJL = jsonAllFields;
 
       final actualGFJL = GridpointForecastJsonLd.fromJson(expectedGFJL);
 
