@@ -160,7 +160,7 @@ void main() {
         if (value != null) {
           test('throws FormatException if $key is missing', () {
             final Map<String, dynamic> actualGFP = {
-              ...jsonOptionalFieldsNulled
+              ...jsonOptionalFieldsNulled,
             };
             actualGFP.remove(key);
 
