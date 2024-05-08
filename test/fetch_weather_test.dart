@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:united_states_weather/fetch_weather.dart';
+import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
 import 'fixtures/weather_gov_forecast_error_json.dart';
 import 'fixtures/weather_gov_forecast_response_json.dart';
@@ -29,7 +30,7 @@ void main() {
         (_) async => http.Response(weatherGovForecastResponseJson, 200),
       );
 
-      expect(await fetchWeather(client), isA<Map<String, dynamic>>());
+      expect(await fetchWeather(client), isA<GridpointForecastJsonLd>());
     });
   });
 
