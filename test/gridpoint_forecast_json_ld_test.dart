@@ -90,7 +90,7 @@ void main() {
       'detailedForecast':
           'A chance of rain before 5am. Mostly cloudy, with a low around 55. West southwest wind around 15 mph, with gusts as high as 25 mph. Chance of precipitation is 40%. New rainfall amounts less than a tenth of an inch possible.',
     };
-    const jsonRequiredFields = {
+    const jsonOptionalFieldsNulled = {
       'number': 1,
       'name': 'Tonight',
       'startTime': '2024-05-04T20:00:00-07:00',
@@ -145,7 +145,7 @@ void main() {
     });
 
     test('deserializes JSON with just the required fields', () {
-      const expectedGFP = jsonRequiredFields;
+      const expectedGFP = jsonOptionalFieldsNulled;
 
       final actualGFP = GridpointForecastPeriod.fromJson(expectedGFP);
 
@@ -153,14 +153,25 @@ void main() {
       expect(actualGFP.windGust, null);
     });
 
-    test('throws FormatException if number is missing', () {
-      const Map<String, dynamic> actualGFP = {};
+    // programmatic exception testing for required fields
+    jsonOptionalFieldsNulled.forEach(
+      (key, value) {
+        // ignore nullable fields since they don't throw exceptions when null
+        if (value != null) {
+          test('throws FormatException if $key is missing', () {
+            final Map<String, dynamic> actualGFP = {
+              ...jsonOptionalFieldsNulled
+            };
+            actualGFP.remove(key);
 
-      expect(
-        () => GridpointForecastPeriod.fromJson(actualGFP),
-        throwsA(isA<FormatException>()),
-      );
-    });
+            expect(
+              () => GridpointForecastPeriod.fromJson(actualGFP),
+              throwsA(isA<FormatException>()),
+            );
+          });
+        }
+      },
+    );
 
     test('serializes all fields to JSON', () {
       const expectedJson = jsonAllFields;
@@ -172,7 +183,7 @@ void main() {
     });
 
     test('serializes nullable fields to JSON', () {
-      const expectedJson = jsonRequiredFields;
+      const expectedJson = jsonOptionalFieldsNulled;
 
       final gfp = GridpointForecastPeriod.fromJson(expectedJson);
       final actualJson = gfp.toJson();
@@ -189,7 +200,7 @@ void main() {
       'unitCode': 'wmoUnit:m',
       'value': 9001,
     };
-    const jsonRequiredFields = {
+    const jsonOptionalFieldsNulled = {
       'maxValue': null,
       'minValue': null,
       'qualityControl': null,
@@ -213,7 +224,7 @@ void main() {
     );
 
     test('deserializes JSON with just the required fields', () {
-      const expectedQV = jsonRequiredFields;
+      const expectedQV = jsonOptionalFieldsNulled;
 
       final actualQV = QuantitativeValue.fromJson(expectedQV);
 
@@ -242,7 +253,7 @@ void main() {
     });
 
     test('serializes nullable fields to JSON', () {
-      const expectedJson = jsonRequiredFields;
+      const expectedJson = jsonOptionalFieldsNulled;
 
       final qv = QuantitativeValue.fromJson(expectedJson);
       final actualJson = qv.toJson();
