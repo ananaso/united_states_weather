@@ -3,8 +3,7 @@
 // TODO parse in isolate for performance? https://codewithandrea.com/articles/parse-large-json-dart-isolates/
 // TODO possibly replace this with a code generation strategy
 class GridpointForecastJsonLd {
-  // TODO figure out how to shape a "JsonLdContext" class
-  final List<Object> context;
+  // ignoring @context since it doesn't seem useful
   // TODO maybe do something with "Well-known Text" format?
   final String geometry;
   // TODO try parsing this and other times directly into DateTimes?
@@ -19,7 +18,6 @@ class GridpointForecastJsonLd {
   final List<GridpointForecastPeriod> periods;
 
   const GridpointForecastJsonLd({
-    required this.context,
     required this.geometry,
     required this.updated,
     required this.units,
@@ -32,14 +30,6 @@ class GridpointForecastJsonLd {
   });
 
   factory GridpointForecastJsonLd.fromJson(Map<String, dynamic> json) {
-    final context = ['filler'];
-    // final context = json['@context'];
-    // if (context is! List<Object>) {
-    //   throw FormatException(
-    //     'Invalid JSON: required "@context" field of type List<Object> in $json',
-    //   );
-    // }
-
     final geometry = json['geometry'];
     if (geometry is! String) {
       throw FormatException(
@@ -112,7 +102,6 @@ class GridpointForecastJsonLd {
         .toList();
 
     return GridpointForecastJsonLd(
-      context: context,
       geometry: geometry,
       updated: updated,
       units: units,
