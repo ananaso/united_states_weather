@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
 Future<GridpointForecastJsonLd> fetchWeather(http.Client client) async {
-  final http.Response response = await client
-      .get(Uri.parse('https://api.weather.gov/gridpoints/LOX/148,36/forecast'));
+  final http.Response response = await client.get(
+    Uri.parse('https://api.weather.gov/gridpoints/LOX/148,36/forecast'),
+    headers: {'Accept': 'application/ld+json'},
+  );
 
   if (response.statusCode == 200) {
     return GridpointForecastJsonLd.fromJson(

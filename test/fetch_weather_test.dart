@@ -25,6 +25,7 @@ void main() {
           Uri.parse(
             'https://api.weather.gov/gridpoints/LOX/148,36/forecast',
           ),
+          headers: {'Accept': 'application/ld+json'},
         ),
       ).thenAnswer(
         (_) async => http.Response(weatherGovForecastResponseJson, 200),
@@ -42,6 +43,7 @@ void main() {
         Uri.parse(
           'https://api.weather.gov/gridpoints/LOX/148,36/forecast',
         ),
+        headers: {'Accept': 'application/ld+json'},
       ),
     ).thenAnswer(
       (_) async => http.Response(weatherGovForecastErrorJson, 500),
