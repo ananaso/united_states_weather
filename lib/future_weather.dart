@@ -62,7 +62,7 @@ class _FutureWeatherState extends State<FutureWeather> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           );
         } else if (snapshot.hasError) {

@@ -6,6 +6,8 @@ void main() {
   runApp(const UnitedStatesWeather());
 }
 
+// TODO is there a way to have eslint-like auto-fix capabilities for flutter/dart?
+
 class UnitedStatesWeather extends StatelessWidget {
   const UnitedStatesWeather({super.key});
 

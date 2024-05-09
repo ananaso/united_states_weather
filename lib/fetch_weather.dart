@@ -8,7 +8,7 @@ Future<GridpointForecastJsonLd> fetchWeather(http.Client client) async {
     Uri.parse('https://api.weather.gov/gridpoints/LOX/148,36/forecast/hourly'),
     headers: {
       'Accept': 'application/ld+json',
-      'User-Agent': '(USWeather, usweather.amulet712@simplelogin.com)'
+      'User-Agent': '(USWeather, usweather.amulet712@simplelogin.com)',
     },
   );
 
