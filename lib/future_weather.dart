@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:united_states_weather/fetch_weather.dart';
 import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
@@ -28,11 +28,38 @@ class _FutureWeatherState extends State<FutureWeather> {
       future: futureWeather,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          final currentForecast = snapshot.data?.periods
+          final currentForecast = snapshot.data!.periods
               .firstWhere((element) => element.number == 1);
-          return Text(
-            '${currentForecast?.temperature} °${currentForecast?.temperatureUnit}',
-            style: const TextStyle(fontSize: 32),
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${currentForecast.temperature} °${currentForecast.temperatureUnit}',
+                style: const TextStyle(fontSize: 32),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    flex: 20,
+                    child: currentForecast.isDaytime
+                        ? const Icon(Symbols.clear_day)
+                        : const Icon(Symbols.clear_night),
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  Flexible(
+                    flex: 20,
+                    child: Text(
+                      currentForecast.shortForecast,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
+              )
+            ],
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');

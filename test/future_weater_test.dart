@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:united_states_weather/future_weather.dart';
@@ -78,6 +79,7 @@ void main() {
       Durations.short2,
     );
 
-    expect(find.text('Cloudy'), findsOneWidget);
+    expect(find.text('Clear'), findsOneWidget);
+    expect(find.byIcon(Symbols.clear_night), findsOneWidget);
   });
 }
