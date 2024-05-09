@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
-import 'mocks/gridpoint_forecast_json_ld_test.mocks.dart';
+import 'fixtures/gridpoint_forecast_period_json.dart';
+import 'fixtures/quantitative_value_json.dart';
 
 void main() {
   group('GridpointForecastJsonLd', () {

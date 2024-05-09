@@ -1,10 +1,4 @@
-const mockQV = {
-  'unitCode': 'wmoUnit:percent',
-  'value': 40,
-  'maxValue': null,
-  'minValue': null,
-  'qualityControl': null,
-};
+import 'quantitative_value_json.dart';
 
 Map<String, dynamic> mockGFP({num number = 1}) {
   return {
