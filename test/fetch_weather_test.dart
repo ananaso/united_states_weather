@@ -7,7 +7,7 @@ import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
 import 'fixtures/fetch_weather_request.dart';
 import 'fixtures/weather_gov_forecast_error_json.dart';
-import 'fixtures/weather_gov_forecast_response_json.dart';
+import 'fixtures/weather_gov_forecast_hourly_response_json.dart';
 import 'mocks/fetch_weather_test.mocks.dart';
 
 // Generate a MockClient using the Mockito package.
@@ -27,7 +27,7 @@ void main() {
           headers: mockHeaders,
         ),
       ).thenAnswer(
-        (_) async => http.Response(weatherGovForecastResponseJson, 200),
+        (_) async => http.Response(weatherGovForecastHourlyResponseJson, 200),
       );
 
       expect(await fetchWeather(client), isA<GridpointForecastJsonLd>());

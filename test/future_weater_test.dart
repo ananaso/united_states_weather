@@ -13,13 +13,12 @@ import 'package:mockito/mockito.dart';
 import 'package:united_states_weather/future_weather.dart';
 
 import 'fixtures/fetch_weather_request.dart';
-import 'fixtures/weather_gov_forecast_response_json.dart';
+import 'fixtures/weather_gov_forecast_hourly_response_json.dart';
 import 'mocks/future_weater_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
-  testWidgets('Displays current temperature with unit',
-      (WidgetTester tester) async {
+  testWidgets('Displays current temperature with unit', (widgetTester) async {
     final client = MockClient();
 
     when(
@@ -28,11 +27,11 @@ void main() {
         headers: mockHeaders,
       ),
     ).thenAnswer(
-      (_) async => http.Response(weatherGovForecastResponseJson, 200),
+      (_) async => http.Response(weatherGovForecastHourlyResponseJson, 200),
     );
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(
+    await widgetTester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
         child: FutureWeather(
@@ -41,30 +40,44 @@ void main() {
       ),
     );
 
-    await tester.pumpAndSettle(
+    await widgetTester.pumpAndSettle(
       Durations.short1,
       EnginePhase.build,
       Durations.short2,
     );
 
-    expect(find.text('55 °F'), findsOneWidget);
+    expect(find.text('63 °F'), findsOneWidget);
   });
 
-  // testWidgets('Displays current temperature with unit',
-  //     (WidgetTester tester) async {
-  //   // Build our app and trigger a frame.
-  //   await tester.pumpWidget(const UnitedStatesWeather());
+  testWidgets('Displays current status as text with icon',
+      (widgetTester) async {
+    final client = MockClient();
 
-  //   // Verify that our counter starts at 0.
-  //   expect(find.text('0'), findsOneWidget);
-  //   expect(find.text('1'), findsNothing);
+    when(
+      client.get(
+        mockUri,
+        headers: mockHeaders,
+      ),
+    ).thenAnswer(
+      (_) async => http.Response(weatherGovForecastHourlyResponseJson, 200),
+    );
 
-  //   // Tap the '+' icon and trigger a frame.
-  //   await tester.tap(find.byIcon(Icons.add));
-  //   await tester.pump();
+    // Build our app and trigger a frame.
+    await widgetTester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: FutureWeather(
+          client: client,
+        ),
+      ),
+    );
 
-  //   // Verify that our counter has incremented.
-  //   expect(find.text('0'), findsNothing);
-  //   expect(find.text('1'), findsOneWidget);
-  // });
+    await widgetTester.pumpAndSettle(
+      Durations.short1,
+      EnginePhase.build,
+      Durations.short2,
+    );
+
+    expect(find.text('Cloudy'), findsOneWidget);
+  });
 }
