@@ -5,6 +5,7 @@ import 'package:mockito/mockito.dart';
 import 'package:united_states_weather/fetch_weather.dart';
 import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
+import 'fixtures/fetch_weather_request.dart';
 import 'fixtures/weather_gov_forecast_error_json.dart';
 import 'fixtures/weather_gov_forecast_response_json.dart';
 import 'mocks/fetch_weather_test.mocks.dart';
@@ -22,10 +23,8 @@ void main() {
       //  it calls the provided http.Client
       when(
         client.get(
-          Uri.parse(
-            'https://api.weather.gov/gridpoints/LOX/148,36/forecast',
-          ),
-          headers: {'Accept': 'application/ld+json'},
+          mockUri,
+          headers: mockHeaders,
         ),
       ).thenAnswer(
         (_) async => http.Response(weatherGovForecastResponseJson, 200),
@@ -40,10 +39,8 @@ void main() {
 
     when(
       client.get(
-        Uri.parse(
-          'https://api.weather.gov/gridpoints/LOX/148,36/forecast',
-        ),
-        headers: {'Accept': 'application/ld+json'},
+        mockUri,
+        headers: mockHeaders,
       ),
     ).thenAnswer(
       (_) async => http.Response(weatherGovForecastErrorJson, 500),
