@@ -28,8 +28,10 @@ class _FutureWeatherState extends State<FutureWeather> {
       future: futureWeather,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          final currentForecast = snapshot.data?.periods
+              .firstWhere((element) => element.number == 1);
           return Text(
-            '${snapshot.data!.periods[0].temperature} °${snapshot.data!.periods[0].temperatureUnit}',
+            '${currentForecast?.temperature} °${currentForecast?.temperatureUnit}',
             style: const TextStyle(fontSize: 32),
           );
         } else if (snapshot.hasError) {
