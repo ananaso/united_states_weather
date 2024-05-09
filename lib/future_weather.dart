@@ -30,6 +30,9 @@ class _FutureWeatherState extends State<FutureWeather> {
         if (snapshot.hasData) {
           final currentForecast = snapshot.data!.periods
               .firstWhere((element) => element.number == 1);
+          var clearIcon = currentForecast.isDaytime
+              ? const Icon(Symbols.clear_day)
+              : const Icon(Symbols.clear_night);
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -43,9 +46,10 @@ class _FutureWeatherState extends State<FutureWeather> {
                 children: [
                   Flexible(
                     flex: 20,
-                    child: currentForecast.isDaytime
-                        ? const Icon(Symbols.clear_day)
-                        : const Icon(Symbols.clear_night),
+                    // TODO separate this icon out into a master class
+                    child: currentForecast.shortForecast == 'Clear'
+                        ? clearIcon
+                        : const Icon(Symbols.question_mark),
                   ),
                   const Spacer(
                     flex: 1,
