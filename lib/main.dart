@@ -73,8 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
             elevation: 5,
           ),
-          Flexible(
-            fit: FlexFit.tight,
+          Expanded(
             child: FutureWeather(client: http.Client()),
           ),
         ],
