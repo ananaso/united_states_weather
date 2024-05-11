@@ -3,12 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:united_states_weather/forecast_icon.dart';
 
+import 'utils/with_directionality.dart';
+
 void main() {
   group('ForecastIcon', () {
     testWidgets('shows question_mark symbol when forecast is unhandled',
         (tester) async {
       await tester.pumpWidget(
-        directionalForecastIcon(forecast: 'Clear', isDaytime: false),
+        forecastIcon(forecast: 'Clear', isDaytime: false),
       );
 
       final iconFinder = find.byIcon(Symbols.question_mark);
@@ -21,7 +23,7 @@ void main() {
           'shows clear_day symbol when forecast is "Clear" during daytime',
           (tester) async {
         await tester.pumpWidget(
-          directionalForecastIcon(forecast: 'Clear', isDaytime: true),
+          forecastIcon(forecast: 'Clear', isDaytime: true),
         );
 
         final iconFinder = find.byIcon(Symbols.clear_day);
@@ -33,7 +35,7 @@ void main() {
           'shows clear_night symbol when forecast is "Clear" during nighttime',
           (tester) async {
         await tester.pumpWidget(
-          directionalForecastIcon(forecast: 'Clear', isDaytime: false),
+          forecastIcon(forecast: 'Clear', isDaytime: false),
         );
 
         final iconFinder = find.byIcon(Symbols.clear_night);
@@ -47,7 +49,7 @@ void main() {
           'shows partly_cloudy_day symbol when forecast is "Mostly Sunny" during daytime',
           (tester) async {
         await tester.pumpWidget(
-          directionalForecastIcon(forecast: 'Mostly Sunny', isDaytime: true),
+          forecastIcon(forecast: 'Mostly Sunny', isDaytime: true),
         );
 
         final iconFinder = find.byIcon(Symbols.partly_cloudy_day);
@@ -59,7 +61,7 @@ void main() {
           'shows partly_cloudy_night symbol when forecast is "Mostly Sunny" during nighttime',
           (tester) async {
         await tester.pumpWidget(
-          directionalForecastIcon(forecast: 'Mostly Sunny', isDaytime: false),
+          forecastIcon(forecast: 'Mostly Sunny', isDaytime: false),
         );
 
         final iconFinder = find.byIcon(Symbols.partly_cloudy_night);
@@ -73,7 +75,7 @@ void main() {
           'shows partly_cloudy_day symbol when forecast is "Partly Cloudy" during daytime',
           (tester) async {
         await tester.pumpWidget(
-          directionalForecastIcon(forecast: 'Partly Cloudy', isDaytime: true),
+          forecastIcon(forecast: 'Partly Cloudy', isDaytime: true),
         );
 
         final iconFinder = find.byIcon(Symbols.partly_cloudy_day);
@@ -85,7 +87,7 @@ void main() {
           'shows partly_cloudy_night symbol when forecast is "Partly Cloudy" during nighttime',
           (tester) async {
         await tester.pumpWidget(
-          directionalForecastIcon(forecast: 'Partly Cloudy', isDaytime: false),
+          forecastIcon(forecast: 'Partly Cloudy', isDaytime: false),
         );
 
         final iconFinder = find.byIcon(Symbols.partly_cloudy_night);
@@ -97,7 +99,7 @@ void main() {
     testWidgets('shows cloudy symbol when forecast is "Cloudy"',
         (tester) async {
       await tester.pumpWidget(
-        directionalForecastIcon(forecast: 'Cloudy'),
+        forecastIcon(forecast: 'Cloudy'),
       );
 
       final iconFinder = find.byIcon(Symbols.cloudy);
@@ -107,7 +109,7 @@ void main() {
 
     testWidgets('shows sunny symbol when forecast is "Sunny"', (tester) async {
       await tester.pumpWidget(
-        directionalForecastIcon(forecast: 'Sunny'),
+        forecastIcon(forecast: 'Sunny'),
       );
 
       final iconFinder = find.byIcon(Symbols.sunny);
@@ -119,7 +121,7 @@ void main() {
         'shows partly_cloudy_night symbol when forecast is "Mostly Clear"',
         (tester) async {
       await tester.pumpWidget(
-        directionalForecastIcon(forecast: 'Mostly Clear', isDaytime: false),
+        forecastIcon(forecast: 'Mostly Clear', isDaytime: false),
       );
 
       final iconFinder = find.byIcon(Symbols.partly_cloudy_night);
@@ -131,7 +133,7 @@ void main() {
         'shows partly_cloudy_night symbol when forecast is "Mostly Clear"',
         (tester) async {
       await tester.pumpWidget(
-        directionalForecastIcon(forecast: 'Mostly Clear', isDaytime: false),
+        forecastIcon(forecast: 'Mostly Clear', isDaytime: false),
       );
 
       final iconFinder = find.byIcon(Symbols.partly_cloudy_night);
@@ -141,17 +143,14 @@ void main() {
   });
 }
 
-Widget directionalForecastIcon({
+Widget forecastIcon({
   required String forecast,
   bool isDaytime = true,
 }) {
-  return Directionality(
-    textDirection: TextDirection.ltr,
-    child: ForecastIcon(
+  return withDirectionality(
+    ForecastIcon(
       forecast: forecast,
       isDaytime: isDaytime,
     ),
   );
 }
-
-// 'shows clear_night symbol when forecast is "Clear" and is not daytime'
