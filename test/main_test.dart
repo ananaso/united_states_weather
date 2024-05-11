@@ -6,18 +6,23 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:united_states_weather/future_weather.dart';
+import 'package:http/http.dart' as http;
 import 'package:united_states_weather/main.dart';
 
+@GenerateMocks([http.Client])
 void main() {
   testWidgets(
-    'Displays current temperature with unit',
+    'Defaults to Current Weather page',
     (WidgetTester tester) async {
       // Build our app and trigger a frame.
       await tester.pumpWidget(const UnitedStatesWeather());
 
-      expect(find.text('63 °F'), findsOneWidget);
+      final elementFinder = find.byElementType(FutureWeather);
+
+      expect(elementFinder, findsOneWidget);
     },
-    skip: true,
   );
 
   // testWidgets('Displays current temperature with unit',
