@@ -80,6 +80,6 @@ void main() {
     );
 
     expect(find.text('Clear'), findsOneWidget);
-    expect(find.byIcon(Symbols.clear_night), findsOneWidget);
+    expect(find.byIcon(Symbols.clear_night), findsNothing);
   });
 }

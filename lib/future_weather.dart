@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:united_states_weather/fetch_weather.dart';
-import 'package:united_states_weather/forecast_icon.dart';
 import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
 class FutureWeather extends StatefulWidget {
@@ -37,29 +36,9 @@ class _FutureWeatherState extends State<FutureWeather> {
                 '${currentForecast.temperature} °${currentForecast.temperatureUnit}',
                 style: const TextStyle(fontSize: 32),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(
-                    flex: 20,
-                    // TODO separate this icon out into a master class
-                    child: ForecastIcon(
-                      forecast: currentForecast.shortForecast,
-                      isDaytime: currentForecast.isDaytime,
-                    ),
-                  ),
-                  const Spacer(
-                    flex: 1,
-                  ),
-                  Flexible(
-                    flex: 20,
-                    child: Text(
-                      currentForecast.shortForecast,
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ],
+              Text(
+                currentForecast.shortForecast,
+                style: const TextStyle(fontSize: 18),
               ),
             ],
           );
