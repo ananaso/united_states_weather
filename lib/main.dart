@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:united_states_weather/future_weather.dart';
 
 void main() {
@@ -17,10 +18,13 @@ class UnitedStatesWeather extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          // TODO add light/dark mode toggle in settings
+          seedColor: Colors.blueGrey,
+        ),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'USWeather'),
     );
   }
 }
@@ -35,6 +39,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // NavigationRail parameters
+  int _selectedIndex = 0;
+  bool showTrailing = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +50,35 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(child: FutureWeather(client: http.Client())),
+      body: Row(
+        children: [
+          NavigationRail(
+            selectedIndex: _selectedIndex,
+            // groupAlignment: -1,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            labelType: NavigationRailLabelType.selected,
+            destinations: const [
+              NavigationRailDestination(
+                icon: Icon(Symbols.thermostat),
+                label: Text('Forecast'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Symbols.air),
+                label: Text('Wind'),
+              ),
+            ],
+            elevation: 5,
+          ),
+          Flexible(
+            fit: FlexFit.tight,
+            child: FutureWeather(client: http.Client()),
+          ),
+        ],
+      ),
     );
   }
 }
