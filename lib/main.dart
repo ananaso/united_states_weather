@@ -54,7 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           NavigationRail(
             selectedIndex: _selectedIndex,
-            // groupAlignment: -1,
             onDestinationSelected: (int index) {
               setState(() {
                 _selectedIndex = index;
@@ -74,7 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
             elevation: 5,
           ),
           Expanded(
-            child: FutureWeather(client: http.Client()),
+            child: switch (_selectedIndex) {
+              0 => FutureWeather(client: http.Client()),
+              1 => const Text(
+                  'Windy today',
+                  textAlign: TextAlign.center,
+                ),
+              _ => const Text(
+                  "How'd you get here?",
+                  textAlign: TextAlign.center,
+                )
+            },
           ),
         ],
       ),

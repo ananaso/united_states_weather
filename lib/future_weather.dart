@@ -43,7 +43,10 @@ class _FutureWeatherState extends State<FutureWeather> {
             ],
           );
         } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
+          return Text(
+            '${snapshot.error}',
+            textAlign: TextAlign.center,
+          );
         }
 
         // By default, show a loading spinner
