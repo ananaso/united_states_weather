@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:united_states_weather/fetch_weather.dart';
+import 'package:united_states_weather/forecast_icon.dart';
 import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
 
 class FutureWeather extends StatefulWidget {
@@ -30,9 +30,6 @@ class _FutureWeatherState extends State<FutureWeather> {
         if (snapshot.hasData) {
           final currentForecast = snapshot.data!.periods
               .firstWhere((element) => element.number == 1);
-          var clearIcon = currentForecast.isDaytime
-              ? const Icon(Symbols.clear_day)
-              : const Icon(Symbols.clear_night);
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -47,9 +44,10 @@ class _FutureWeatherState extends State<FutureWeather> {
                   Flexible(
                     flex: 20,
                     // TODO separate this icon out into a master class
-                    child: currentForecast.shortForecast == 'Clear'
-                        ? clearIcon
-                        : const Icon(Symbols.question_mark),
+                    child: ForecastIcon(
+                      forecast: currentForecast.shortForecast,
+                      isDaytime: currentForecast.isDaytime,
+                    ),
                   ),
                   const Spacer(
                     flex: 1,
