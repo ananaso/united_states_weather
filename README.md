@@ -1,16 +1,14 @@
-# united_states_weather
+# United States Weather (USWeather)
 
-A new Flutter project.
+A weather app using only APIs provided by agencies of the United States federal government, built with Flutter.
 
-## Getting Started
+## APIs
+USWeather currently relies on APIs from the following agencies:
+- [National Weather Service](https://www.weather.gov/documentation/services-web-api)
 
-This project is a starting point for a Flutter application.
+## Development
+### Running Tests
+Prior to running tests, ensure you've built any mocks: `dart run build_runner build`
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Links I've Found Helpful
+- [Guide to Parsing JSON in Dart/Flutter](https://codewithandrea.com/articles/parse-json-dart/)
