@@ -1,0 +1,1 @@
+enum PrefKey { forecastHourly, maxAge }

@@ -1,7 +1,12 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:united_states_weather/fetch_weather.dart';
 import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
+import 'package:united_states_weather/pref_key.dart';
 
 class FutureWeather extends StatefulWidget {
   const FutureWeather({super.key, required this.client});
@@ -13,12 +18,24 @@ class FutureWeather extends StatefulWidget {
 }
 
 class _FutureWeatherState extends State<FutureWeather> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late Future<GridpointForecastJsonLd> futureWeather;
 
   @override
   void initState() {
     super.initState();
-    futureWeather = fetchWeather(widget.client);
+    futureWeather = _prefs.then((prefs) {
+      final cachedForecast = prefs.getString(PrefKey.forecastHourly.name);
+      if (cachedForecast != null) {
+        return Future(
+          () => GridpointForecastJsonLd.fromJson(
+            jsonDecode(cachedForecast) as Map<String, dynamic>,
+          ),
+        );
+      } else {
+        return fetchWeather(widget.client);
+      }
+    });
   }
 
   @override
