@@ -11,7 +11,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockito/annotations.dart';
 import 'package:united_states_weather/future_weather.dart';
 
-import 'mocks/future_weater_test.mocks.dart';
+import 'mocks/future_weather_test.mocks.dart';
 import 'utils/mock_weather_api.dart';
 import 'utils/with_directionality.dart';
 
