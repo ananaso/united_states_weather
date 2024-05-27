@@ -7,7 +7,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:united_states_weather/future_weather.dart';
+import 'package:united_states_weather/views/weather_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:united_states_weather/main.dart';
 
@@ -21,14 +21,14 @@ void main() {
     (WidgetTester tester) async {
       final client = MockClient();
 
-      mockWeatherApi(client);
+      mockWeatherApi(client: client);
 
       // Build our app and trigger a frame.
       await tester.pumpWidget(const UnitedStatesWeather());
 
       await renderWeatherData(tester);
 
-      final elementFinder = find.byElementType(FutureWeather);
+      final elementFinder = find.byElementType(WeatherView);
 
       expect(elementFinder, findsOneWidget);
     },

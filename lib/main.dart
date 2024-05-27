@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:united_states_weather/future_weather.dart';
+import 'package:united_states_weather/views/weather_view.dart';
+import 'package:united_states_weather/views/wind_view.dart';
 
 void main() {
   runApp(const UnitedStatesWeather());
@@ -74,11 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Expanded(
             child: switch (_selectedIndex) {
-              0 => FutureWeather(client: http.Client()),
-              1 => const Text(
-                  'Windy today',
-                  textAlign: TextAlign.center,
-                ),
+              0 => WeatherView(client: http.Client()),
+              1 => WindView(client: http.Client()),
               _ => const Text(
                   "How'd you get here?",
                   textAlign: TextAlign.center,

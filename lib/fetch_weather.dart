@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
+import 'package:united_states_weather/types/gridpoint_forecast_json_ld.dart';
 import 'package:united_states_weather/pref_key.dart';
 
 // TODO Figure out a better way to inject/mock the client when testing

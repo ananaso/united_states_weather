@@ -1,0 +1,1 @@
+enum GridpointForecastUnits { us, si }

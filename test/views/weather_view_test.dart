@@ -10,26 +10,26 @@ import 'package:http/http.dart' as http;
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockito/annotations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:united_states_weather/future_weather.dart';
+import 'package:united_states_weather/views/weather_view.dart';
 import 'package:united_states_weather/pref_key.dart';
 
-import 'fixtures/weather_gov_forecast_hourly_response_json.dart';
-import 'mocks/future_weather_test.mocks.dart';
-import 'utils/mock_weather_api.dart';
-import 'utils/with_directionality.dart';
+import '../fixtures/weather_gov_forecast_hourly_response_json.dart';
+import '../mocks/future_weather_test.mocks.dart';
+import '../utils/mock_weather_api.dart';
+import '../utils/with_directionality.dart';
 
 @GenerateMocks([http.Client])
 void main() {
-  group('FutureWeather', () {
+  group('WeatherView', () {
     testWidgets('Displays current temperature with unit', (tester) async {
       final client = MockClient();
 
-      mockWeatherApi(client);
+      mockWeatherApi(client: client);
 
       // Build our app and trigger a frame.
       await tester.pumpWidget(
         withDirectionality(
-          FutureWeather(
+          WeatherView(
             client: client,
           ),
         ),
@@ -43,12 +43,12 @@ void main() {
     testWidgets('Displays current status as text', (tester) async {
       final client = MockClient();
 
-      mockWeatherApi(client);
+      mockWeatherApi(client: client);
 
       // Build our app and trigger a frame.
       await tester.pumpWidget(
         withDirectionality(
-          FutureWeather(
+          WeatherView(
             client: client,
           ),
         ),
@@ -70,7 +70,7 @@ void main() {
       // Build our app and trigger a frame.
       await tester.pumpWidget(
         withDirectionality(
-          FutureWeather(
+          WeatherView(
             client: client,
           ),
         ),

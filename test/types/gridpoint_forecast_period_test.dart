@@ -1,75 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:united_states_weather/gridpoint_forecast_json_ld.dart';
+import 'package:united_states_weather/types/gridpoint_forecast_period.dart';
 
-import 'fixtures/gridpoint_forecast_period_json.dart';
-import 'fixtures/quantitative_value_json.dart';
+import '../fixtures/quantitative_value_json.dart';
 
 void main() {
-  group('GridpointForecastJsonLd', () {
-    final jsonAllFields = {
-      '@context': {
-        '@version': '1.1',
-        'wx': 'https://api.weather.gov/ontology#',
-        'geo': 'http://www.opengis.net/ont/geosparql#',
-        'unit': 'http://codes.wmo.int/common/unit/',
-        '@vocab': 'https://api.weather.gov/ontology#',
-      },
-      'geometry':
-          'POLYGON((-118.4074018 33.8356153,-118.4027399 33.8134049,-118.3759623 33.8172817,-118.3806192 33.8394926,-118.4074018 33.8356153))',
-      'updated': '2024-05-05T02:10:26+00:00',
-      'units': 'us',
-      'forecastGenerator': 'BaselineForecastGenerator',
-      'generatedAt': '2024-05-05T03:08:38+00:00',
-      'updateTime': '2024-05-05T02:10:26+00:00',
-      'validTimes': '2024-05-04T20:00:00+00:00/P7DT8H',
-      'elevation': mockQV,
-      'periods': [mockGFP(number: 0), mockGFP(number: 1), mockGFP(number: 2)],
-    };
-
-    test('deserializes JSON to all fields', () {
-      final expectedGFJL = jsonAllFields;
-
-      final actualGFJL = GridpointForecastJsonLd.fromJson(expectedGFJL);
-
-      expect(
-        actualGFJL.geometry,
-        expectedGFJL['geometry'],
-      );
-      expect(
-        actualGFJL.updated,
-        expectedGFJL['updated'],
-      );
-      expect(
-        actualGFJL.units.name,
-        expectedGFJL['units'],
-      );
-      expect(
-        actualGFJL.forecastGenerator,
-        expectedGFJL['forecastGenerator'],
-      );
-      expect(
-        actualGFJL.generatedAt,
-        expectedGFJL['generatedAt'],
-      );
-      expect(
-        actualGFJL.updateTime,
-        expectedGFJL['updateTime'],
-      );
-      expect(
-        actualGFJL.validTimes,
-        expectedGFJL['validTimes'],
-      );
-      expect(
-        actualGFJL.elevation.toJson(),
-        expectedGFJL['elevation'],
-      );
-      expect(
-        actualGFJL.periods.map((period) => period.toJson()),
-        expectedGFJL['periods'],
-      );
-    });
-  });
-
   group('GridpointForecastPeriod', () {
     const jsonAllFields = {
       'number': 1,
@@ -188,76 +122,6 @@ void main() {
 
       final gfp = GridpointForecastPeriod.fromJson(expectedJson);
       final actualJson = gfp.toJson();
-
-      expect(actualJson, expectedJson);
-    });
-  });
-
-  group('QuantitativeValue', () {
-    const jsonAllFields = {
-      'maxValue': 12000,
-      'minValue': 0,
-      'qualityControl': 'G',
-      'unitCode': 'wmoUnit:m',
-      'value': 9001,
-    };
-    const jsonOptionalFieldsNulled = {
-      'maxValue': null,
-      'minValue': null,
-      'qualityControl': null,
-      'unitCode': 'wmoUnit:m',
-      'value': null,
-    };
-
-    test(
-      'deserializes JSON to all fields',
-      () {
-        const expectedQV = jsonAllFields;
-
-        final actualQV = QuantitativeValue.fromJson(expectedQV);
-
-        expect(actualQV.maxValue, expectedQV['maxValue']);
-        expect(actualQV.minValue, expectedQV['minValue']);
-        expect(actualQV.qualityControl?.name, expectedQV['qualityControl']);
-        expect(actualQV.unitCode, expectedQV['unitCode']);
-        expect(actualQV.value, expectedQV['value']);
-      },
-    );
-
-    test('deserializes JSON with just the required fields', () {
-      const expectedQV = jsonOptionalFieldsNulled;
-
-      final actualQV = QuantitativeValue.fromJson(expectedQV);
-
-      expect(actualQV.maxValue, null);
-      expect(actualQV.minValue, null);
-      expect(actualQV.qualityControl, null);
-      expect(actualQV.value, null);
-    });
-
-    test('throws FormatException if unitCode is missing', () {
-      const Map<String, dynamic> actualQv = {};
-
-      expect(
-        () => QuantitativeValue.fromJson(actualQv),
-        throwsA(isA<FormatException>()),
-      );
-    });
-
-    test('serializes all fields to JSON', () {
-      const expectedJson = jsonAllFields;
-
-      final qv = QuantitativeValue.fromJson(expectedJson);
-      final actualJson = qv.toJson();
-
-      expect(actualJson, expectedJson);
-    });
-
-    test('serializes nullable fields to JSON', () {
-      const expectedJson = jsonOptionalFieldsNulled;
-
-      final qv = QuantitativeValue.fromJson(expectedJson);
-      final actualJson = qv.toJson();
 
       expect(actualJson, expectedJson);
     });

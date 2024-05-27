@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../fixtures/fetch_weather_request.dart';
 import '../fixtures/weather_gov_forecast_hourly_response_json.dart';
 
-PostExpectation<Future<http.Response>> mockWeatherApi(http.Client client) {
+PostExpectation<Future<http.Response>> mockWeatherApi({
+  required http.Client client,
+  Map<String, Object>? initialCache,
+}) {
+  SharedPreferences.setMockInitialValues(initialCache ?? {});
+
   final mockedApi = when(
     client.get(
       mockUri,
