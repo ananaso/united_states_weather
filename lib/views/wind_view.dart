@@ -28,6 +28,7 @@ class _WindViewState extends State<WindView> {
   void initState() {
     super.initState();
     // TODO refactor weather fetching into helper function
+    // TODO this caching might be holding onto things for too long?
     futureWeather = _prefs.then((prefs) {
       final cachedForecast = prefs.getString(PrefKey.forecastHourly.name);
       if (cachedForecast != null) {
