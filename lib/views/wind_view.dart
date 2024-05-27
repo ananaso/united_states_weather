@@ -67,11 +67,12 @@ class _WindViewState extends State<WindView> {
                   ),
                   Transform.rotate(
                     angle: compassDirectionToRadians(
-                        currentForecast.windDirection),
+                      currentForecast.windDirection,
+                    ),
                     child: const Icon(Symbols.arrow_upward),
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           );
         } else if (snapshot.hasError) {
