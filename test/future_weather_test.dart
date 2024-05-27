@@ -84,5 +84,49 @@ void main() {
       expect(tempTextFinder, findsOneWidget);
       expect(forecastTextFinder, findsOneWidget);
     });
+
+    // TODO test is broken, fix at some point
+    // testWidgets('fetches fresh data if cache exists but is stale', (tester) {
+    //   final fakeAsync = FakeAsync();
+    //   final client = MockClient();
+    //   final mockCache = <String, Object>{
+    //     PrefKey.forecastHourly.name: {
+    //       ...weatherGovForecastHourlyResponseJsonMap,
+    //       // TODO create this mock time more programmatically
+    //       'generatedAt': '2024-05-09T02:00:50+00:00',
+    //     },
+    //     PrefKey.maxAge.name: 3200,
+    //   };
+    //   SharedPreferences.setMockInitialValues(mockCache);
+
+    //   mockWeatherApi(client);
+
+    //   fakeAsync.run((async) async {
+    //     Clock.fixed(
+    //       DateTime.parse(
+    //         weatherGovForecastHourlyResponseJsonMap['generatedAt'] as String,
+    //       ),
+    //     );
+
+    //     tester.pumpWidget(
+    //       withDirectionality(
+    //         FutureWeather(
+    //           client: client,
+    //         ),
+    //       ),
+    //     );
+
+    //     renderWeatherData(tester);
+
+    //     final tempTextFinder = find.text('63 °F');
+    //     final forecastTextFinder = find.text('Clear');
+
+    //     expect(tempTextFinder, findsOneWidget);
+    //     expect(forecastTextFinder, findsOneWidget);
+
+    //     async.elapse(const Duration(seconds: 5));
+    //   });
+    //   fakeAsync.flushMicrotasks();
+    // });
   });
 }
