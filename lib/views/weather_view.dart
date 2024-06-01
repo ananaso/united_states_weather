@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:united_states_weather/fetch_weather.dart';
+import 'package:united_states_weather/load_weather.dart' show loadWeather;
 import 'package:united_states_weather/types/gridpoint_forecast_json_ld.dart';
-import 'package:united_states_weather/pref_key.dart';
 
 class WeatherView extends StatefulWidget {
   const WeatherView({super.key, required this.client});
@@ -24,18 +22,7 @@ class _WeatherViewState extends State<WeatherView> {
   @override
   void initState() {
     super.initState();
-    futureWeather = _prefs.then((prefs) {
-      final cachedForecast = prefs.getString(PrefKey.forecastHourly.name);
-      if (cachedForecast != null) {
-        return Future(
-          () => GridpointForecastJsonLd.fromJson(
-            jsonDecode(cachedForecast) as Map<String, dynamic>,
-          ),
-        );
-      } else {
-        return fetchWeather(widget.client);
-      }
-    });
+    futureWeather = _prefs.then((prefs) => loadWeather(prefs, widget.client));
   }
 
   @override

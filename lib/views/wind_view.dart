@@ -1,13 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:united_states_weather/fetch_weather.dart';
+import 'package:united_states_weather/load_weather.dart' show loadWeather;
 import 'package:united_states_weather/types/gridpoint_forecast_json_ld.dart';
-import 'package:united_states_weather/pref_key.dart';
 import 'package:united_states_weather/types/wind_direction.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -27,20 +25,7 @@ class _WindViewState extends State<WindView> {
   @override
   void initState() {
     super.initState();
-    // TODO refactor weather fetching into helper function
-    // TODO this caching might be holding onto things for too long?
-    futureWeather = _prefs.then((prefs) {
-      final cachedForecast = prefs.getString(PrefKey.forecastHourly.name);
-      if (cachedForecast != null) {
-        return Future(
-          () => GridpointForecastJsonLd.fromJson(
-            jsonDecode(cachedForecast) as Map<String, dynamic>,
-          ),
-        );
-      } else {
-        return fetchWeather(widget.client);
-      }
-    });
+    futureWeather = _prefs.then((prefs) => loadWeather(prefs, widget.client));
   }
 
   @override

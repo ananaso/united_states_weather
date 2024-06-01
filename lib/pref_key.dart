@@ -1,1 +1,1 @@
-enum PrefKey { forecastHourly, maxAge }
+enum PrefKey { forecastHourly, cacheExpiration }
