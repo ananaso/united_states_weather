@@ -54,7 +54,9 @@ class _WeatherViewState extends State<WeatherView> {
         }
 
         // By default, show a loading spinner
-        return const CircularProgressIndicator();
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
