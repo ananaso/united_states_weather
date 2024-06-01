@@ -9,16 +9,16 @@ import 'package:united_states_weather/types/gridpoint_forecast_json_ld.dart';
 import 'package:united_states_weather/types/wind_direction.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-class WindView extends StatefulWidget {
-  const WindView({super.key, required this.client});
+class WindScreen extends StatefulWidget {
+  const WindScreen({super.key, required this.client});
 
   final http.Client client;
 
   @override
-  State<WindView> createState() => _WindViewState();
+  State<WindScreen> createState() => _WindScreenState();
 }
 
-class _WindViewState extends State<WindView> {
+class _WindScreenState extends State<WindScreen> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late Future<GridpointForecastJsonLd> futureWeather;
 

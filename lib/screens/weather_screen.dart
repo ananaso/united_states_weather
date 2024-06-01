@@ -6,16 +6,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:united_states_weather/load_weather.dart' show loadWeather;
 import 'package:united_states_weather/types/gridpoint_forecast_json_ld.dart';
 
-class WeatherView extends StatefulWidget {
-  const WeatherView({super.key, required this.client});
+class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({super.key, required this.client});
 
   final http.Client client;
 
   @override
-  State<WeatherView> createState() => _WeatherViewState();
+  State<WeatherScreen> createState() => _WeatherScreenState();
 }
 
-class _WeatherViewState extends State<WeatherView> {
+class _WeatherScreenState extends State<WeatherScreen> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late Future<GridpointForecastJsonLd> futureWeather;
 

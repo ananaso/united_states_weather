@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockito/annotations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:united_states_weather/views/weather_view.dart';
+import 'package:united_states_weather/screens/weather_screen.dart';
 import 'package:united_states_weather/pref_key.dart';
 
 import '../fixtures/weather_gov_forecast_hourly_response_json.dart';
@@ -20,7 +20,7 @@ import '../utils/with_directionality.dart';
 
 @GenerateMocks([http.Client])
 void main() {
-  group('WeatherView', () {
+  group('WeatherScreen', () {
     testWidgets('Displays current temperature with unit', (tester) async {
       final client = MockClient();
 
@@ -29,7 +29,7 @@ void main() {
       // Build our app and trigger a frame.
       await tester.pumpWidget(
         withDirectionality(
-          WeatherView(
+          WeatherScreen(
             client: client,
           ),
         ),
@@ -48,7 +48,7 @@ void main() {
       // Build our app and trigger a frame.
       await tester.pumpWidget(
         withDirectionality(
-          WeatherView(
+          WeatherScreen(
             client: client,
           ),
         ),
@@ -70,7 +70,7 @@ void main() {
       // Build our app and trigger a frame.
       await tester.pumpWidget(
         withDirectionality(
-          WeatherView(
+          WeatherScreen(
             client: client,
           ),
         ),

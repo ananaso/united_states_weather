@@ -12,8 +12,8 @@ import 'package:mockito/annotations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:united_states_weather/pref_key.dart';
 import 'package:united_states_weather/types/wind_direction.dart';
-import 'package:united_states_weather/views/weather_view.dart';
-import 'package:united_states_weather/views/wind_view.dart';
+import 'package:united_states_weather/screens/weather_screen.dart';
+import 'package:united_states_weather/screens/wind_screen.dart';
 
 import '../fixtures/weather_gov_forecast_hourly_response_json.dart';
 import '../mocks/future_weather_test.mocks.dart';
@@ -31,7 +31,7 @@ void main() {
       // Build our app and trigger a frame.
       await tester.pumpWidget(
         withDirectionality(
-          WindView(
+          WindScreen(
             client: client,
           ),
         ),
@@ -53,7 +53,7 @@ void main() {
       // Build our app and trigger a frame.
       await tester.pumpWidget(
         withDirectionality(
-          WindView(
+          WindScreen(
             client: client,
           ),
         ),
@@ -80,7 +80,7 @@ void main() {
         // Build our app and trigger a frame.
         await tester.pumpWidget(
           withDirectionality(
-            WeatherView(
+            WeatherScreen(
               client: client,
             ),
           ),
