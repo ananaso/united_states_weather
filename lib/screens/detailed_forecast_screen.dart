@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:united_states_weather/load_weather.dart' show loadWeather;
 import 'package:united_states_weather/types/gridpoint_forecast_json_ld.dart';
 
+// TODO figure out how to fetch data in parent for all children
+// 	ideas: InheritedWidget? Parent-level FutureBuilder? Something else?
 class DetailedForecastScreen extends StatefulWidget {
   const DetailedForecastScreen({super.key, required this.client});
 

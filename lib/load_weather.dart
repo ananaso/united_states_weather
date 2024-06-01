@@ -51,6 +51,7 @@ Future<GridpointForecastJsonLd> fetchWeather(http.Client client) async {
       jsonDecode(forecastHourly) as Map<String, dynamic>,
     );
   } else {
+    // TODO instead of throwing load cache with "stale" notice in UI
     throw Exception('Failed to load weather data');
   }
 }
