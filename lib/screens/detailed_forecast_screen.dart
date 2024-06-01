@@ -37,7 +37,10 @@ class _DetailedForecastScreenState extends State<DetailedForecastScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                currentForecast.detailedForecast,
+                currentForecast.detailedForecast.isNotEmpty
+                    ? currentForecast.detailedForecast
+                    : 'No detailed forecast at this time',
+                // style: const TextStyle(fontSize: 32),
               ),
             ],
           );
