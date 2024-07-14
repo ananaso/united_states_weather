@@ -9,11 +9,11 @@ class GridpointForecastPeriod {
   bool isDaytime;
   // TODO update to 'forecast_temperature_qv' format
   int temperature;
-  String temperatureUnit;
+  String temperatureUnit; // deprecated
   String? temperatureTrend;
   QuantitativeValue probabilityOfPrecipitation;
-  QuantitativeValue dewpoint;
-  QuantitativeValue relativeHumidity;
+  QuantitativeValue? dewpoint;
+  QuantitativeValue? relativeHumidity;
   // TODO update to 'forecast_wind_speed_qv' format
   String windSpeed;
   // TODO update to 'forecast_wind_speed_qv' format
@@ -107,18 +107,14 @@ class GridpointForecastPeriod {
     final dewpointRaw = json['dewpoint'];
     final dewpoint = dewpointRaw != null
         ? QuantitativeValue.fromJson(dewpointRaw as Map<String, dynamic>)
-        : throw FormatException(
-            'Invalid JSON: required "dewpoint" field of type QuantitativeValue in $json',
-          );
+        : null;
 
     final relativeHumidityRaw = json['relativeHumidity'];
     final relativeHumidity = relativeHumidityRaw != null
         ? QuantitativeValue.fromJson(
             relativeHumidityRaw as Map<String, dynamic>,
           )
-        : throw FormatException(
-            'Invalid JSON: required "relativeHumidity" field of type QuantitativeValue in $json',
-          );
+        : null;
 
     final windSpeed = json['windSpeed'];
     if (windSpeed is! String) {
@@ -189,8 +185,8 @@ class GridpointForecastPeriod {
       'temperatureUnit': temperatureUnit,
       'temperatureTrend': temperatureTrend,
       'probabilityOfPrecipitation': probabilityOfPrecipitation.toJson(),
-      'dewpoint': dewpoint.toJson(),
-      'relativeHumidity': relativeHumidity.toJson(),
+      'dewpoint': dewpoint?.toJson(),
+      'relativeHumidity': relativeHumidity?.toJson(),
       'windSpeed': windSpeed,
       'windGust': windGust,
       'windDirection': windDirection,

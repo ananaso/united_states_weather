@@ -4,7 +4,7 @@ class QuantitativeValue {
   final num? value;
   final num? maxValue;
   final num? minValue;
-  // TODO use regex to make type stricter (see docs)
+  // TODO use regex to make type stricter (see docs for "UnitOfMeasure")
   final String unitCode;
   final QualityControlFlag? qualityControl;
 

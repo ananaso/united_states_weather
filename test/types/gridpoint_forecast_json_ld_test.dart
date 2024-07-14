@@ -16,7 +16,6 @@ void main() {
       },
       'geometry':
           'POLYGON((-118.4074018 33.8356153,-118.4027399 33.8134049,-118.3759623 33.8172817,-118.3806192 33.8394926,-118.4074018 33.8356153))',
-      'updated': '2024-05-05T02:10:26+00:00',
       'units': 'us',
       'forecastGenerator': 'BaselineForecastGenerator',
       'generatedAt': '2024-05-05T03:08:38+00:00',
@@ -34,10 +33,6 @@ void main() {
       expect(
         actualGFJL.geometry,
         expectedGFJL['geometry'],
-      );
-      expect(
-        actualGFJL.updated,
-        expectedGFJL['updated'],
       );
       expect(
         actualGFJL.units.name,

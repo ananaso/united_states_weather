@@ -9,7 +9,6 @@ class GridpointForecastJsonLd {
   // TODO maybe do something with "Well-known Text" format?
   final String geometry;
   // TODO try parsing this and other times directly into DateTimes?
-  final String updated; // deprecated in favor of updateTime
   final GridpointForecastUnits units;
   final String forecastGenerator;
   final String generatedAt;
@@ -21,7 +20,6 @@ class GridpointForecastJsonLd {
 
   const GridpointForecastJsonLd({
     required this.geometry,
-    required this.updated,
     required this.units,
     required this.forecastGenerator,
     required this.generatedAt,
@@ -36,13 +34,6 @@ class GridpointForecastJsonLd {
     if (geometry is! String) {
       throw FormatException(
         'Invalid JSON: required "geometry" field of type String in $json',
-      );
-    }
-
-    final updated = json['updated'];
-    if (updated is! String) {
-      throw FormatException(
-        'Invalid JSON: required "updated" field of type String in $json',
       );
     }
 
@@ -105,7 +96,6 @@ class GridpointForecastJsonLd {
 
     return GridpointForecastJsonLd(
       geometry: geometry,
-      updated: updated,
       units: units,
       forecastGenerator: forecastGenerator,
       generatedAt: generatedAt,

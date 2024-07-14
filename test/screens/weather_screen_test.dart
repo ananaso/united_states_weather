@@ -9,16 +9,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockito/annotations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:united_states_weather/screens/weather_screen.dart';
+import 'package:mockito/mockito.dart';
 import 'package:united_states_weather/pref_key.dart';
+import 'package:united_states_weather/screens/weather_screen.dart';
 
+import '../fixtures/fetch_weather_request.dart';
 import '../fixtures/weather_gov_forecast_hourly_response_json.dart';
-import '../mocks/future_weather_test.mocks.dart';
+@GenerateNiceMocks([MockSpec<http.Client>()])
+import '../mocks/screens/weather_screen_test.mocks.dart';
 import '../utils/mock_weather_api.dart';
 import '../utils/with_directionality.dart';
 
-@GenerateMocks([http.Client])
 void main() {
   group('WeatherScreen', () {
     testWidgets('Displays current temperature with unit', (tester) async {
@@ -37,7 +38,7 @@ void main() {
 
       await renderWeatherData(tester);
 
-      expect(find.text('63 °F'), findsOneWidget);
+      expect(find.text('68 °F'), findsOneWidget);
     });
 
     testWidgets('Displays current status as text', (tester) async {
@@ -56,7 +57,8 @@ void main() {
 
       await renderWeatherData(tester);
 
-      expect(find.text('Clear'), findsOneWidget);
+      expect(find.text('Patchy Fog then Mostly Sunny'), findsOneWidget);
+      // TODO update this once better icon system designed
       expect(find.byIcon(Symbols.clear_night), findsNothing);
     });
 
@@ -64,8 +66,17 @@ void main() {
       final client = MockClient();
       final mockCache = <String, Object>{
         PrefKey.forecastHourly.name: weatherGovForecastHourlyResponseJson,
+        PrefKey.cacheExpiration.name: DateTime.timestamp()
+            .add(const Duration(hours: 3))
+            .millisecondsSinceEpoch,
       };
-      SharedPreferences.setMockInitialValues(mockCache);
+
+      // return 500 if test tries to fetch (i.e. skips cache)
+      mockWeatherApi(
+        client: client,
+        initialCache: mockCache,
+        returnError: true,
+      );
 
       // Build our app and trigger a frame.
       await tester.pumpWidget(
@@ -78,55 +89,40 @@ void main() {
 
       await renderWeatherData(tester);
 
-      final tempTextFinder = find.text('63 °F');
-      final forecastTextFinder = find.text('Clear');
-
-      expect(tempTextFinder, findsOneWidget);
-      expect(forecastTextFinder, findsOneWidget);
+      expect(find.text('68 °F'), findsOneWidget);
+      expect(find.text('Patchy Fog then Mostly Sunny'), findsOneWidget);
+      verifyNever(client.get(mockUri, headers: mockHeaders));
     });
 
-    // TODO test is broken, fix at some point
-    // testWidgets('fetches fresh data if cache exists but is stale', (tester) {
-    //   final fakeAsync = FakeAsync();
-    //   final client = MockClient();
-    //   final mockCache = <String, Object>{
-    //     PrefKey.forecastHourly.name: {
-    //       ...weatherGovForecastHourlyResponseJsonMap,
-    //       // TODO create this mock time more programmatically
-    //       'generatedAt': '2024-05-09T02:00:50+00:00',
-    //     },
-    //     PrefKey.maxAge.name: 3200,
-    //   };
-    //   SharedPreferences.setMockInitialValues(mockCache);
+    testWidgets('fetches fresh data if cache exists but is stale',
+        (tester) async {
+      final client = MockClient();
+      final mockCache = <String, Object>{
+        PrefKey.forecastHourly.name: weatherGovForecastHourlyResponseJson,
+        PrefKey.cacheExpiration.name: DateTime.timestamp()
+            .subtract(const Duration(hours: 3))
+            .millisecondsSinceEpoch,
+      };
 
-    //   mockWeatherApi(client);
+      mockWeatherApi(
+        client: client,
+        initialCache: mockCache,
+      );
 
-    //   fakeAsync.run((async) async {
-    //     Clock.fixed(
-    //       DateTime.parse(
-    //         weatherGovForecastHourlyResponseJsonMap['generatedAt'] as String,
-    //       ),
-    //     );
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(
+        withDirectionality(
+          WeatherScreen(
+            client: client,
+          ),
+        ),
+      );
 
-    //     tester.pumpWidget(
-    //       withDirectionality(
-    //         FutureWeather(
-    //           client: client,
-    //         ),
-    //       ),
-    //     );
+      await renderWeatherData(tester);
 
-    //     renderWeatherData(tester);
-
-    //     final tempTextFinder = find.text('63 °F');
-    //     final forecastTextFinder = find.text('Clear');
-
-    //     expect(tempTextFinder, findsOneWidget);
-    //     expect(forecastTextFinder, findsOneWidget);
-
-    //     async.elapse(const Duration(seconds: 5));
-    //   });
-    //   fakeAsync.flushMicrotasks();
-    // });
+      expect(find.text('68 °F'), findsOneWidget);
+      expect(find.text('Patchy Fog then Mostly Sunny'), findsOneWidget);
+      verify(client.get(mockUri, headers: mockHeaders));
+    });
   });
 }

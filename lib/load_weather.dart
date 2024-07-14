@@ -28,7 +28,6 @@ Future<GridpointForecastJsonLd> loadWeather(
 
 // TODO Figure out a better way to inject/mock the client when testing
 Future<GridpointForecastJsonLd> fetchWeather(http.Client client) async {
-  print('fetching weather');
   final http.Response response = await client.get(
     Uri.parse('https://api.weather.gov/gridpoints/LOX/148,36/forecast/hourly'),
     headers: {

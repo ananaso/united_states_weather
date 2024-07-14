@@ -35,8 +35,8 @@ void main() {
       'temperatureUnit': 'F',
       'temperatureTrend': null,
       'probabilityOfPrecipitation': mockQV,
-      'dewpoint': mockQV,
-      'relativeHumidity': mockQV,
+      'dewpoint': null,
+      'relativeHumidity': null,
       'windSpeed': '15 mph',
       'windGust': null,
       'windDirection': 'WSW',
@@ -64,11 +64,11 @@ void main() {
         expectedGFP['probabilityOfPrecipitation'],
       );
       expect(
-        actualGFP.dewpoint.toJson(),
+        actualGFP.dewpoint?.toJson(),
         expectedGFP['dewpoint'],
       );
       expect(
-        actualGFP.relativeHumidity.toJson(),
+        actualGFP.relativeHumidity?.toJson(),
         expectedGFP['relativeHumidity'],
       );
       expect(actualGFP.windSpeed, expectedGFP['windSpeed']);
@@ -85,6 +85,8 @@ void main() {
       final actualGFP = GridpointForecastPeriod.fromJson(expectedGFP);
 
       expect(actualGFP.temperatureTrend, null);
+      expect(actualGFP.dewpoint, null);
+      expect(actualGFP.relativeHumidity, null);
       expect(actualGFP.windGust, null);
     });
 

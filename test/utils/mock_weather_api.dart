@@ -5,11 +5,13 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../fixtures/fetch_weather_request.dart';
+import '../fixtures/weather_gov_forecast_error_json.dart';
 import '../fixtures/weather_gov_forecast_hourly_response_json.dart';
 
 PostExpectation<Future<http.Response>> mockWeatherApi({
   required http.Client client,
   Map<String, Object>? initialCache,
+  bool? returnError = false,
 }) {
   SharedPreferences.setMockInitialValues(initialCache ?? {});
 
@@ -19,8 +21,11 @@ PostExpectation<Future<http.Response>> mockWeatherApi({
       headers: mockHeaders,
     ),
   );
+
   mockedApi.thenAnswer(
-    (_) async => http.Response(weatherGovForecastHourlyResponseJson, 200),
+    (_) async => returnError == true
+        ? http.Response(weatherGovForecastErrorJson, 500)
+        : http.Response(weatherGovForecastHourlyResponseJson, 200),
   );
   return mockedApi;
 }
